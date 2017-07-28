@@ -29,6 +29,7 @@ public:
     virtual ~GinManager();
 protected:
     std::vector<std::string> m_object_types;
+    std::regex m_object_types_regex;
 private:
     void LoadSettings();
     std::string LoadFile(const std::string file) throw();

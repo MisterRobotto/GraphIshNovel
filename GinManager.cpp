@@ -37,6 +37,7 @@ GinManager::~GinManager() {
  * Prec: None -- runs only when new instance created
  * Post: Defines settings:
  *          - m_object_types (vector of object types)
+ *              - m_object_types_regex (regex OR of all object types)
  */
 void GinManager::LoadSettings()
 {
@@ -49,6 +50,16 @@ void GinManager::LoadSettings()
     m_object_types.push_back("scene"); // scne - scene
     m_object_types.push_back("menu"); // menu - menu
     m_object_types.push_back("driver"); // drvr - driver
+    
+    std::string objects_regex = "^(";
+    for(int i = 0; i < m_object_types.size(); i++)
+    {
+        objects_regex.append(m_object_types.at(i) + "|");
+    }
+    objects_regex.back() = ')';
+    objects_regex.append("$");
+    
+    m_object_types_regex = objects_regex.c_str();
 }
 
 /*
@@ -83,39 +94,34 @@ std::string GinManager::LoadFile(const std::string path) throw()
          * CHECK IF OBJECT TYPE DECLARATION
          */
         
-        // For every object type
-        for(int j = 0; j < m_object_types.size(); j++)
+        // If the prefix is an object type
+        if(std::regex_match(prefix, m_object_types_regex))
         {
-            // If the prefix is an object type
-            if(prefix == m_object_types.at(j))
+            // If it has two arguments
+            if(HasArgs(line,2))
             {
-                // If it has two arguments
-                if(HasArgs(line,2))
+                // If the type is not defined
+                if(type == "NULL")
                 {
-                    // If the type is not defined
-                    if(type == "NULL")
-                    {
-                        // Define it
-                        type = prefix;
-                    }
-                    // If it is, throw TwoType_Error
-                    else
-                    {
-                        throw TwoType_Error(path, std::to_string(i));
-                    }
+                    // Define it
+                    type = prefix;
                 }
-                // If it does not, throw ArgsMismatch_Error
+                // If it is, throw TwoType_Error
                 else
                 {
-                    throw ArgsMismatch_Error(path, std::to_string(i));
+                    throw TwoType_Error(path, std::to_string(i));
                 }
             }
+            // If it does not, throw ArgsMismatch_Error
+            else
+            {
+                throw ArgsMismatch_Error(path, std::to_string(i));
+            }
         }
-        
         /*
          * FUTURE PREFIX IMPLEMENTATIONS GO HERE
          */
-        if(true)
+        else if(true)
         {
             
         }
