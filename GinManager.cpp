@@ -189,15 +189,15 @@ bool GinManager::HasArgs(std::string line, int arg_num)
 {
     /*
      * Note to future users: the regex bit for an arg, with or without quotes,
-     *  is (\S+|".+")
+     *  is (\w+|"[^"\n]+")
      */
     // Start with start-of-line flag, open-paren, and a regex bit for an arg
-    std::string regex_test_str = "^((\\S+|\".+\")";
+    std::string regex_test_str = "^((\\w+|\"[^\"\n]+\")";
     // From 1 to arg_num (ie. arg_num - 1 times)
     for(int i = 1; i < arg_num; i++)
     {
         // Add the regex bit for an arg
-        regex_test_str.append(" (\\S+|\".+\")");
+        regex_test_str.append(" (\\w+|\"[^\"\n]+\")");
     }
     // End with a close-paren and end-of-line flag
     regex_test_str.append(")$");
