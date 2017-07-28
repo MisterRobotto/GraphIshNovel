@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Flow.o \
 	${OBJECTDIR}/GinManager.o \
 	${OBJECTDIR}/Location.o \
+	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/Scene.o \
 	${OBJECTDIR}/main.o
 
@@ -98,6 +99,11 @@ ${OBJECTDIR}/Location.o: Location.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Location.o Location.cpp
+
+${OBJECTDIR}/Menu.o: Menu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Menu.o Menu.cpp
 
 ${OBJECTDIR}/Scene.o: Scene.cpp
 	${MKDIR} -p ${OBJECTDIR}

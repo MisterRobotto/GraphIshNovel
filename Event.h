@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 
-class Event {
+class Event : public INode {
 public:
     Event();
     Event(const Event& orig);
@@ -32,7 +32,6 @@ protected:
     std::map<std::string,std::string> m_vars;
 private:
     std::map<std::string,Flow*> m_flows;
-    std::string m_id;
     std::string m_start_flow;
 };
 
