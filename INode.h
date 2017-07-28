@@ -14,9 +14,11 @@
 #ifndef INODE_H
 #define INODE_H
 
+#include <string>
+
 class INode {
 public:
-    virtual ~INode();
+    virtual ~INode(){};
     virtual void Run() = 0;
 protected:
     std::string m_id;

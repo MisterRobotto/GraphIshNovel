@@ -15,6 +15,7 @@
 #define EVENT_H
 
 #include "Flow.h"
+#include "INode.h"
 
 #include <map>
 #include <string>

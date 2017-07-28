@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Action.o \
 	${OBJECTDIR}/Character.o \
 	${OBJECTDIR}/Event.o \
+	${OBJECTDIR}/Exceptions.o \
 	${OBJECTDIR}/Flow.o \
 	${OBJECTDIR}/GinManager.o \
 	${OBJECTDIR}/Location.o \
@@ -84,6 +85,11 @@ ${OBJECTDIR}/Event.o: Event.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Event.o Event.cpp
+
+${OBJECTDIR}/Exceptions.o: Exceptions.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Exceptions.o Exceptions.cpp
 
 ${OBJECTDIR}/Flow.o: Flow.cpp
 	${MKDIR} -p ${OBJECTDIR}

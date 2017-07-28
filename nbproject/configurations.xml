@@ -24,6 +24,7 @@
       <itemPath>Action.cpp</itemPath>
       <itemPath>Character.cpp</itemPath>
       <itemPath>Event.cpp</itemPath>
+      <itemPath>Exceptions.cpp</itemPath>
       <itemPath>Flow.cpp</itemPath>
       <itemPath>GinManager.cpp</itemPath>
       <itemPath>Location.cpp</itemPath>
@@ -72,6 +73,8 @@
       <item path="Event.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Exceptions.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FileTests/tst_Directory.gnd" ex="false" tool="3" flavor2="0">
       </item>
@@ -139,6 +142,8 @@
       <item path="Event.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Exceptions.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FileTests/tst_Directory.gnd" ex="false" tool="3" flavor2="0">
       </item>

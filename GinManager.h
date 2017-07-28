@@ -14,6 +14,8 @@
 #ifndef GINMANAGER_H
 #define GINMANAGER_H
 
+#include "Exceptions.cpp"
+
 #include <string>
 #include <fstream>
 #include <vector>
@@ -29,7 +31,7 @@ protected:
     std::vector<std::string> m_object_types;
 private:
     void LoadSettings();
-    std::string LoadFile(const std::string file);
+    std::string LoadFile(const std::string file) throw();
     void LoadDirectory(const std::string path);
     std::string m_driver;
     bool HasArgs(std::string line, int arg_num);

@@ -57,7 +57,7 @@ void GinManager::LoadSettings()
  * Prec: A valid .gnf file path
  * Post: Initializes the object defined in the .gnf file
  */
-std::string GinManager::LoadFile(const std::string path)
+std::string GinManager::LoadFile(const std::string path) throw()
 {
     // Load the file's contents into a vector
     std::vector<std::string> lines;
@@ -95,12 +95,12 @@ std::string GinManager::LoadFile(const std::string path)
                     }
                     else
                     {
-                        // TODO: throw a two-type error
+                        throw TwoType_Error(path, std::to_string(i));
                     }
                 }
                 else
                 {
-                    // TODO: throw a too-many-args error
+                    throw TooManyArgs_Error(path, std::to_string(i));
                 }
             }
         }
@@ -113,7 +113,7 @@ std::string GinManager::LoadFile(const std::string path)
  * Name: LoadDirectory
  * Desc: Takes in the path to a directory file and completes all steps therein
  * Prec: A .gnd file path
- * Post: [TODO: Make not stupid] Form Voltron or some shit.
+ * Post: Loads all the objects from the files in the directory.
  */
 void GinManager::LoadDirectory(const std::string path)
 {

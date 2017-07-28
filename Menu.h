@@ -14,6 +14,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "INode.h"
+
 class Menu : public INode{
 public:
     Menu();
