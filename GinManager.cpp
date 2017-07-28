@@ -87,13 +87,16 @@ std::string GinManager::LoadFile(const std::string path) throw()
     for(int i = 0; i < lines.size(); i++)
     {
         std::string line = lines.at(i);
+        // Indentation does not matter now, so get rid of it before problems
+        while(line.front() == ' ' || line.front() == '\t')
+        {
+            line.erase(0,0);
+        }
         std::string prefix = line.substr(0,line.find_first_of(" "));
-        
         
         /*
          * CHECK IF OBJECT TYPE DECLARATION
          */
-        
         // If the prefix is an object type
         if(std::regex_match(prefix, m_object_types_regex))
         {
@@ -126,6 +129,14 @@ std::string GinManager::LoadFile(const std::string path) throw()
             
         }
         /*
+         * Remove all comment / all-whitespace lines
+         */
+        else if(prefix.empty() || prefix.front() == '#')
+        {
+            lines.erase(lines.cbegin()+i);
+            i--;
+        }
+        /*
          * If prefix does not match anything else, throw UnknownPrefix_Error
          */
         else
@@ -135,6 +146,11 @@ std::string GinManager::LoadFile(const std::string path) throw()
     }
     
     std::cout << type << " " << id << std::endl;
+    
+    /*
+     * Pass control to function associated with object type
+     */
+    // TODO: ^ that
 }
 
 /* 
