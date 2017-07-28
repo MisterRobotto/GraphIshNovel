@@ -78,6 +78,11 @@ std::string GinManager::LoadFile(const std::string path) throw()
         std::string line = lines.at(i);
         std::string prefix = line.substr(0,line.find_first_of(" "));
         
+        
+        /*
+         * CHECK IF OBJECT TYPE DECLARATION
+         */
+        
         // For every object type
         for(int j = 0; j < m_object_types.size(); j++)
         {
@@ -182,12 +187,19 @@ void GinManager::LoadDirectory(const std::string path)
  */
 bool GinManager::HasArgs(std::string line, int arg_num)
 {
-    std::string regex_test_str = "^((\\S+)";
-    // From 1 to arg_num (ie. arg_num - 1 times
+    /*
+     * Note to future users: the regex bit for an arg, with or without quotes,
+     *  is (\S+|".+")
+     */
+    // Start with start-of-line flag, open-paren, and a regex bit for an arg
+    std::string regex_test_str = "^((\\S+|\".+\")";
+    // From 1 to arg_num (ie. arg_num - 1 times)
     for(int i = 1; i < arg_num; i++)
     {
-        regex_test_str.append(" (\\S+)");
+        // Add the regex bit for an arg
+        regex_test_str.append(" (\\S+|\".+\")");
     }
+    // End with a close-paren and end-of-line flag
     regex_test_str.append(")$");
     std::regex regex_test_rgx(regex_test_str);
     
