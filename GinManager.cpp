@@ -51,11 +51,11 @@ void GinManager::LoadSettings()
     m_object_types.push_back("driver"); // drvr - driver
 }
 
-/* [TODO]
- * Name: 
- * Desc: 
- * Prec: 
- * Post: 
+/*
+ * Name: LoadFile
+ * Desc: Takes in a file path, reads its contents, and initializes the object
+ * Prec: A valid .gnf file path
+ * Post: Initializes the object defined in the .gnf file
  */
 std::string GinManager::LoadFile(const std::string path)
 {
@@ -109,11 +109,11 @@ std::string GinManager::LoadFile(const std::string path)
     std::cout << type << " " << id << std::endl;
 }
 
-/* [TODO]
- * Name: 
- * Desc: 
- * Prec: 
- * Post: 
+/* 
+ * Name: LoadDirectory
+ * Desc: Takes in the path to a directory file and completes all steps therein
+ * Prec: A .gnd file path
+ * Post: [TODO: Make not stupid] Form Voltron or some shit.
  */
 void GinManager::LoadDirectory(const std::string path)
 {
@@ -123,6 +123,8 @@ void GinManager::LoadDirectory(const std::string path)
     // Directory vector and char array for input
     std::vector<std::string> directory;
     char chr_input[1024];
+    
+    // Read all the lines into the vector
     while(directory_file.peek() != EOF)
     {
         directory_file.getline(chr_input,80);
@@ -180,9 +182,6 @@ void GinManager::LoadDirectory(const std::string path)
  */
 bool GinManager::HasArgs(std::string line, int arg_num)
 {
-    // TODO: Make a way to test for number of spaces excluding spaces in quotes
-    //          Maybe a regex bit that can be added multiple times?
-    //          ^((\S+) (\S+)...)$ add more " (\S+)" for more args
     std::string regex_test_str = "^((\\S+)";
     // From 1 to arg_num (ie. arg_num - 1 times
     for(int i = 1; i < arg_num; i++)
