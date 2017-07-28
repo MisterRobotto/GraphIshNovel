@@ -98,16 +98,33 @@ std::string GinManager::LoadFile(const std::string path) throw()
                         // Define it
                         type = prefix;
                     }
+                    // If it is, throw TwoType_Error
                     else
                     {
                         throw TwoType_Error(path, std::to_string(i));
                     }
                 }
+                // If it does not, throw ArgsMismatch_Error
                 else
                 {
-                    throw TooManyArgs_Error(path, std::to_string(i));
+                    throw ArgsMismatch_Error(path, std::to_string(i));
                 }
             }
+        }
+        
+        /*
+         * FUTURE PREFIX IMPLEMENTATIONS GO HERE
+         */
+        if(true)
+        {
+            
+        }
+        /*
+         * If prefix does not match anything else, throw UnknownPrefix_Error
+         */
+        else
+        {
+            throw UnknownPrefix_Error(path, std::to_string(i));
         }
     }
     

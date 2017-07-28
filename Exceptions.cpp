@@ -7,10 +7,14 @@
 #include <exception>
 #include <string>
 
-class TooManyArgs_Error : public std::exception
+/*
+ * ArgsMismatch_Error is used when the given and expected number of arguments
+ *  do not match
+ */
+class ArgsMismatch_Error : public std::exception
 {
     public:
-        explicit TooManyArgs_Error (const std::string& file,
+        explicit ArgsMismatch_Error (const std::string& file,
                 const std::string& line)
         {
             m_file = file;
@@ -18,8 +22,8 @@ class TooManyArgs_Error : public std::exception
         }
         virtual const char* what() const throw()
         {
-            return ("Too many args present in file " + m_file + " at line "
-                    + m_line).c_str();
+            return ("Given and expected numbers of arguments do not match in file "
+                    + m_file + " at line " + m_line).c_str();
         }
     private:
         std::string m_file;
@@ -27,6 +31,9 @@ class TooManyArgs_Error : public std::exception
 };
 
 
+/*
+ * TwoType_Error is used when an object attempts to define its type twice
+ */
 class TwoType_Error : public std::exception
 {
     public:
@@ -39,6 +46,26 @@ class TwoType_Error : public std::exception
         virtual const char* what() const throw()
         {
             return ("Object is defined a second time in file " + m_file
+                    + " at line " + m_line).c_str();
+        }
+    private:
+        std::string m_file;
+        std::string m_line;
+};
+
+
+class UnknownPrefix_Error : public std::exception
+{
+    public:
+        explicit UnknownPrefix_Error (const std::string& file,
+                const std::string& line)
+        {
+            m_file = file;
+            m_line = line;
+        }
+        virtual const char* what() const throw()
+        {
+            return ("Unknown/Invalid prefix given in file " + m_file
                     + " at line " + m_line).c_str();
         }
     private:
