@@ -45,11 +45,12 @@ void GinManager::LoadSettings()
      * Object Types
      */
     m_object_types.push_back("char"); // char - character
-    m_object_types.push_back("location"); // lctn - location
-    m_object_types.push_back("event"); // evnt - event
-    m_object_types.push_back("scene"); // scne - scene
-    m_object_types.push_back("menu"); // menu - menu
-    m_object_types.push_back("driver"); // drvr - driver
+    m_object_types.push_back("character");
+    m_object_types.push_back("location");
+    m_object_types.push_back("event");
+    m_object_types.push_back("scene");
+    m_object_types.push_back("menu");
+    m_object_types.push_back("driver");
     
     std::string objects_regex = "^(";
     for(int i = 0; i < m_object_types.size(); i++)
@@ -60,6 +61,17 @@ void GinManager::LoadSettings()
     objects_regex.append("$");
     
     m_object_types_regex = objects_regex.c_str();
+    
+    /*
+     * TODO: Implement in-file variables
+    /*
+     * Variable Types
+     *\/
+    m_var_types.push_back("int");
+    m_var_types.push_back("string");
+    m_var_types.push_back("double");
+    m_var_types.push_back("bool");
+     */
 }
 
 /*
@@ -108,6 +120,15 @@ std::string GinManager::LoadFile(const std::string path) throw()
                 {
                     // Define it
                     type = prefix;
+                    
+                    /*
+                     * NOTE: Future shortenings go here.
+                     */
+                    // If character is unshortened, shorten it
+                    if(type == "character")
+                    {
+                        type = "char";
+                    }
                 }
                 // If it is, throw TwoType_Error
                 else
