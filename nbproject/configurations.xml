@@ -43,9 +43,9 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <itemPath>FileTests/tst_Directory.gnd</itemPath>
-    <itemPath>FileTests/tst_Driver.gnf</itemPath>
     <itemPath>FileTests/tst_chr_MainChar.gnf</itemPath>
+    <itemPath>FileTests/tst_drc_TestProject.gnd</itemPath>
+    <itemPath>FileTests/tst_drv_TestDriver.gnf</itemPath>
     <itemPath>FileTests/tst_evt_TestEvent.gnf</itemPath>
     <itemPath>FileTests/tst_mnu_Main.gnf</itemPath>
   </logicalFolder>
@@ -76,11 +76,11 @@
       </item>
       <item path="Exceptions.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="FileTests/tst_Directory.gnd" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FileTests/tst_Driver.gnf" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileTests/tst_chr_MainChar.gnf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileTests/tst_drc_TestProject.gnd" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileTests/tst_drv_TestDriver.gnf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileTests/tst_evt_TestEvent.gnf" ex="false" tool="3" flavor2="0">
       </item>
@@ -145,11 +145,11 @@
       </item>
       <item path="Exceptions.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="FileTests/tst_Directory.gnd" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FileTests/tst_Driver.gnf" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileTests/tst_chr_MainChar.gnf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileTests/tst_drc_TestProject.gnd" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileTests/tst_drv_TestDriver.gnf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileTests/tst_evt_TestEvent.gnf" ex="false" tool="3" flavor2="0">
       </item>

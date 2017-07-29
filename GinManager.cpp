@@ -38,13 +38,17 @@ GinManager::~GinManager() {
  * Post: Defines settings:
  *          - m_object_types (vector of object types)
  *              - m_object_types_regex (regex OR of all object types)
+ *          - m_char_prefixes (vector of valid char prefixes)
+ *              - m_char_prefixes_regex (associated regex OR)
  */
 void GinManager::LoadSettings()
 {
+    std::vector<std::string> all_prefixes;
+    
     /*
      * Object Types
      */
-    m_object_types.push_back("char"); // char - character
+    m_object_types.push_back("char");
     m_object_types.push_back("character");
     m_object_types.push_back("location");
     m_object_types.push_back("event");
@@ -52,18 +56,27 @@ void GinManager::LoadSettings()
     m_object_types.push_back("menu");
     m_object_types.push_back("driver");
     
-    std::string objects_regex = "^(";
-    for(int i = 0; i < m_object_types.size(); i++)
-    {
-        objects_regex.append(m_object_types.at(i) + "|");
-    }
-    objects_regex.back() = ')';
-    objects_regex.append("$");
+    m_object_types_regex = MakeRegex(m_object_types);
     
-    m_object_types_regex = objects_regex.c_str();
+    all_prefixes.insert(all_prefixes.end(), m_object_types.begin(),
+            m_object_types.end());
     
     /*
-     * TODO: Implement in-file variables
+     * Valid Character prefixes
+     */
+    m_char_prefixes.push_back("name");
+    m_char_prefixes.push_back("prefer");
+    m_char_prefixes.push_back("short");
+    m_char_prefixes.push_back("color");
+    m_char_prefixes.push_back("image");
+    
+    m_char_prefixes_regex = MakeRegex(m_char_prefixes);
+    
+    all_prefixes.insert(all_prefixes.end(), m_char_prefixes.begin(),
+            m_char_prefixes.end());
+    
+    /*
+     * TODO: See issue #1
     /*
      * Variable Types
      *\/
@@ -72,6 +85,8 @@ void GinManager::LoadSettings()
     m_var_types.push_back("double");
     m_var_types.push_back("bool");
      */
+    
+    m_all_prefixes_regex = MakeRegex(all_prefixes);
 }
 
 /*
@@ -129,6 +144,10 @@ std::string GinManager::LoadFile(const std::string path) throw()
                     {
                         type = "char";
                     }
+                    
+                    // Remove the type definition; it's not needed anymore
+                    lines.erase(lines.cbegin()+i);
+                    i--;
                 }
                 // If it is, throw TwoType_Error
                 else
@@ -172,6 +191,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
      * Pass control to function associated with object type
      */
     // TODO: ^ that
+    //      See also issue #3
 }
 
 /* 
@@ -264,4 +284,31 @@ bool GinManager::HasArgs(std::string line, int arg_num)
     std::regex regex_test_rgx(regex_test_str);
     
     return std::regex_match(line, regex_test_rgx);
+}
+
+
+/*
+ * Name: MakeRegex
+ * Desc: Takes in a vector and returns the matching regex OR statement
+ * Prec: A non-empty string vector
+ * Post: A regex containing the regex OR of the contents of vec
+ */
+std::regex GinManager::MakeRegex(std::vector<std::string> vec)
+{
+    // Begin with a start-of-string flag and open-paren
+    std::string objects_regex = "^(";
+    // For every string in vec
+    for(int i = 0; i < vec.size(); i++)
+    {
+        // Add that string and the OR flag '|'
+        objects_regex.append(vec.at(i) + "|");
+    }
+    // Replace the trailing OR flag with a close-paren
+    objects_regex.back() = ')';
+    // Add an end-of-string flag
+    objects_regex.append("$");
+    
+    // Make a regex object with the string and return it
+    std::regex output(objects_regex);
+    return output;
 }

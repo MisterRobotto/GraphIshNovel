@@ -1,6 +1,7 @@
 # Player Character test
 
 char CHAR_MAIN
+name Protagonist Jones
 prefer Protagonist-kun
 short me
 color #3c11d8
