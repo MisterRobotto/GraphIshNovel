@@ -18,7 +18,7 @@
 #include <string>
 
 std::string VERSION = "0.1.1";
-std::string PATH = "C:\\Users\\ConnorFlynn\\Documents\\NetBeansProjects\\GraphIshNovel\\FileTests\\tst_Directory.gnd";
+std::string PATH = "C:\\Users\\ConnorFlynn\\Documents\\NetBeansProjects\\GraphIshNovel\\FileTests\\tst_drc_TestProject.gnd";
 
 /*
  * 

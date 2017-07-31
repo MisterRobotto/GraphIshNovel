@@ -34,6 +34,21 @@ protected:
     // Character Prefixes
     std::vector<std::string> m_char_prefixes;
     std::regex m_char_prefixes_regex;
+    // Location Prefixes
+    std::vector<std::string> m_loc_prefixes;
+    std::regex m_loc_prefixes_regex;
+    // Event Prefixes
+    std::vector<std::string> m_evnt_prefixes;
+    std::regex m_evnt_prefixes_regex;
+    // Scene Prefixes
+    std::vector<std::string> m_scne_prefixes;
+    std::regex m_scne_prefixes_regex;
+    // Menu Prefixes
+    std::vector<std::string> m_menu_prefixes;
+    std::regex m_menu_prefixes_regex;
+    // Driver Prefixes
+    std::vector<std::string> m_drvr_prefixes;
+    std::regex m_drvr_prefixes_regex;
     
     /*
      * TODO: See issue #1

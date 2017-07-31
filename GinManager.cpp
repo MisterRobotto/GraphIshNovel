@@ -69,11 +69,62 @@ void GinManager::LoadSettings()
     m_char_prefixes.push_back("short");
     m_char_prefixes.push_back("color");
     m_char_prefixes.push_back("image");
+    m_char_prefixes.push_back("say");
     
     m_char_prefixes_regex = MakeRegex(m_char_prefixes);
     
     all_prefixes.insert(all_prefixes.end(), m_char_prefixes.begin(),
             m_char_prefixes.end());
+    
+    /*
+     * Valid Location Prefixes [TODO]
+     */
+    m_loc_prefixes.push_back("");
+    
+    m_loc_prefixes_regex = MakeRegex(m_loc_prefixes);
+    
+    all_prefixes.insert(all_prefixes.end(), m_loc_prefixes.begin(),
+            m_loc_prefixes.end());
+    
+    /*
+     * Valid Event Prefixes [TODO]
+     */
+    m_evnt_prefixes.push_back("");
+    
+    m_evnt_prefixes_regex = MakeRegex(m_loc_prefixes);
+    
+    all_prefixes.insert(all_prefixes.end(), m_evnt_prefixes.begin(),
+            m_evnt_prefixes.end());
+    
+    /*
+     * Valid Scene Prefixes [TODO]
+     */
+    m_scne_prefixes.push_back("");
+    
+    m_scne_prefixes_regex = MakeRegex(m_loc_prefixes);
+    
+    all_prefixes.insert(all_prefixes.end(), m_scne_prefixes.begin(),
+            m_scne_prefixes.end());
+    
+    /*
+     * Valid Menu Prefixes [TODO]
+     */
+    m_menu_prefixes.push_back("");
+    
+    m_menu_prefixes_regex = MakeRegex(m_loc_prefixes);
+    
+    all_prefixes.insert(all_prefixes.end(), m_menu_prefixes.begin(),
+            m_menu_prefixes.end());
+    
+    /*
+     * Valid Driver Prefixes [TODO]
+     */
+    m_drvr_prefixes.push_back("");
+    
+    m_drvr_prefixes_regex = MakeRegex(m_drvr_prefixes);
+    
+    all_prefixes.insert(all_prefixes.end(), m_drvr_prefixes.begin(),
+            m_drvr_prefixes.end());
     
     /*
      * TODO: See issue #1
@@ -117,7 +168,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
         // Indentation does not matter now, so get rid of it before problems
         while(line.front() == ' ' || line.front() == '\t')
         {
-            line.erase(0,0);
+            line.erase(0,1);
         }
         std::string prefix = line.substr(0,line.find_first_of(" "));
         
@@ -144,6 +195,9 @@ std::string GinManager::LoadFile(const std::string path) throw()
                     {
                         type = "char";
                     }
+                    
+                    // Get the identifier
+                    id = line.substr(prefix.size() + 1);
                     
                     // Remove the type definition; it's not needed anymore
                     lines.erase(lines.cbegin()+i);
