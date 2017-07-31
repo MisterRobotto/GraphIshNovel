@@ -87,23 +87,33 @@ void GinManager::LoadSettings()
             m_loc_prefixes.end());
     
     /*
-     * Valid Scene Prefixes [TODO]
+     * Valid Scene Prefixes
      */
-    m_scne_prefixes.push_back("");
+    m_scne_prefixes.push_back("setting");
+    m_scne_prefixes.push_back("start_flow");
+    m_scne_prefixes.push_back("flow");
+    m_scne_prefixes.push_back("say");
+    m_scne_prefixes.push_back("if");
+    m_scne_prefixes.push_back("elif");
+    m_scne_prefixes.push_back("else");
+    m_scne_prefixes.push_back("while");
+    m_scne_prefixes.push_back("play");
+    m_scne_prefixes.push_back("branch");
+    m_scne_prefixes.push_back("display");
+    m_scne_prefixes.push_back("choice");
+    m_scne_prefixes.push_back("response");
     
-    m_scne_prefixes_regex = MakeRegex(m_loc_prefixes);
+    m_scne_prefixes_regex = MakeRegex(m_scne_prefixes);
     
     all_prefixes.insert(all_prefixes.end(), m_scne_prefixes.begin(),
             m_scne_prefixes.end());
-    
-
     
     /*
      * Valid Menu Prefixes [TODO]
      */
     m_menu_prefixes.push_back("");
     
-    m_menu_prefixes_regex = MakeRegex(m_loc_prefixes);
+    m_menu_prefixes_regex = MakeRegex(m_menu_prefixes);
     
     all_prefixes.insert(all_prefixes.end(), m_menu_prefixes.begin(),
             m_menu_prefixes.end());
