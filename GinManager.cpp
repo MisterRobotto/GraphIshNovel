@@ -87,16 +87,6 @@ void GinManager::LoadSettings()
             m_loc_prefixes.end());
     
     /*
-     * Valid Event Prefixes [TODO]
-     */
-    m_evnt_prefixes.push_back("");
-    
-    m_evnt_prefixes_regex = MakeRegex(m_loc_prefixes);
-    
-    all_prefixes.insert(all_prefixes.end(), m_evnt_prefixes.begin(),
-            m_evnt_prefixes.end());
-    
-    /*
      * Valid Scene Prefixes [TODO]
      */
     m_scne_prefixes.push_back("");
@@ -105,6 +95,8 @@ void GinManager::LoadSettings()
     
     all_prefixes.insert(all_prefixes.end(), m_scne_prefixes.begin(),
             m_scne_prefixes.end());
+    
+
     
     /*
      * Valid Menu Prefixes [TODO]
