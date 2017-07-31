@@ -1,0 +1,63 @@
+# Advanced explanation example
+
+scene SCN_TEST_0001
+setting LOC_TESTROOM_0001
+start_flow start
+
+flow start:
+
+	# Runs |me|'s think text output
+	say |me|.think "At that moment, ${|testchar|} walked in."
+
+	# If the scene contains the character |interrupt|
+	if scene.isPresent(|interrupt|):
+	
+		play EVT_INTERRUPT_0001
+	
+	# Shows |testchar|'s default graphic
+	
+	display |testchar|
+	
+	# Runs |testchar|'s default text output
+	say |testchar| "So what do you think about this?"
+	
+	# Creates variable (please work and not be stupid)
+	int complete = 0
+	
+	# Repeats prompt while complete == 0 (ie. until it's branched)
+	while complete == 0:
+	
+		# Poses user choice, using |testchar|'s color for the prompt
+		choice "!{|testchar|} So what do you think about this?":
+		
+			response "I like it!":
+			
+				say |me| "I like it!"
+				
+				branch EVT_APPROVE_0001
+				
+			response "What was \"it\" again?":
+			
+				say |me| "What was \"it\" again?"
+			
+				# play will prioritize existing flows before outside objects
+				play explain
+			
+			response "I don't like it.":
+			
+				say |me| "I don't like it."
+				
+				# Display |testchar|'s close_eyes graphic
+				display |testchar|.close_eyes
+				
+				say |testchar| "..."
+				
+				display |testchar|.angry
+				
+				say |testchar| "Then you can go ahead and leave."
+				
+				branch SCN_KICKOUT_0001
+
+# Referenced flow
+flow explain:
+#...

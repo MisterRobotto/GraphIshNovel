@@ -50,6 +50,7 @@
     <itemPath>FileTests/tst_drv_TestDriver.gnf</itemPath>
     <itemPath>FileTests/tst_evt_TestEvent.gnf</itemPath>
     <itemPath>FileTests/tst_mnu_Main.gnf</itemPath>
+    <itemPath>FileTests/tst_scn_ExampleScene.gnf</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -91,6 +92,8 @@
       <item path="FileTests/tst_evt_TestEvent.gnf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileTests/tst_mnu_Main.gnf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileTests/tst_scn_ExampleScene.gnf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Flow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -164,6 +167,8 @@
       <item path="FileTests/tst_evt_TestEvent.gnf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileTests/tst_mnu_Main.gnf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileTests/tst_scn_ExampleScene.gnf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Flow.cpp" ex="false" tool="1" flavor2="0">
       </item>
