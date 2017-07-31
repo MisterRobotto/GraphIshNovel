@@ -7,68 +7,61 @@
 #include <exception>
 #include <string>
 
+#include <iostream>
+
+class Gin_Error : public std::exception
+{
+    public:
+        explicit Gin_Error (const std::string& file, const std::string& line,
+                const std::string& error)
+        {
+            m_file = file.substr(file.find_last_of("\\")+1);
+            m_line = line;
+            m_error = error;
+        }
+        virtual const char* what() const throw()
+        {
+            return (m_error + " in file ").append(m_file + " at line ")
+                    .append(m_line).c_str();
+        }
+    protected:
+        std::string m_file;
+        std::string m_line;
+        std::string m_error;
+};
+
 /*
  * ArgsMismatch_Error is used when the given and expected number of arguments
  *  do not match
  */
-class ArgsMismatch_Error : public std::exception
+class ArgsMismatch_Error : public Gin_Error
 {
     public:
         explicit ArgsMismatch_Error (const std::string& file,
-                const std::string& line)
-        {
-            m_file = file;
-            m_line = line;
-        }
-        virtual const char* what() const throw()
-        {
-            return ("Given and expected numbers of arguments do not match in file "
-                    + m_file + " at line " + m_line).c_str();
-        }
-    private:
-        std::string m_file;
-        std::string m_line;
+                const std::string& line) : Gin_Error(file, line,
+                        "Given and expected numbers of arguments do not match")
+                {}
 };
 
 
 /*
  * TwoType_Error is used when an object attempts to define its type twice
  */
-class TwoType_Error : public std::exception
+class TwoType_Error : public Gin_Error
 {
     public:
         explicit TwoType_Error (const std::string& file,
-                const std::string& line)
-        {
-            m_file = file;
-            m_line = line;
-        }
-        virtual const char* what() const throw()
-        {
-            return ("Object is defined a second time in file " + m_file
-                    + " at line " + m_line).c_str();
-        }
-    private:
-        std::string m_file;
-        std::string m_line;
+                const std::string& line) : Gin_Error(file, line,
+                        "Object type is defined a second time")
+                {}
 };
 
 
-class UnknownPrefix_Error : public std::exception
+class UnknownPrefix_Error : public Gin_Error
 {
     public:
         explicit UnknownPrefix_Error (const std::string& file,
-                const std::string& line)
-        {
-            m_file = file;
-            m_line = line;
-        }
-        virtual const char* what() const throw()
-        {
-            return ("Unknown/Invalid prefix given in file " + m_file
-                    + " at line " + m_line).c_str();
-        }
-    private:
-        std::string m_file;
-        std::string m_line;
+                const std::string& line) : Gin_Error(file, line,
+                        "Unknown or invalid prefix given")
+                {}
 };

@@ -1,6 +1,6 @@
 # Test Event
 
-event EVNT_TEST_0001
+event EVNT TEST_0001
 start_flow test_flow
 
 flow test_flow:
