@@ -132,9 +132,13 @@ void GinManager::LoadSettings()
             m_menu_prefixes.end());
     
     /*
-     * Valid Driver Prefixes [TODO]
+     * Valid Driver Prefixes
+     * (WARNING: Highly subject to change)
      */
-    m_drvr_prefixes.push_back("");
+    m_drvr_prefixes.push_back("@MAIN_DRIVER");
+    m_drvr_prefixes.push_back("vars");
+    m_drvr_prefixes.push_back("start");
+    m_drvr_prefixes.push_back("include");
     
     m_drvr_prefixes_regex = MakeRegex(m_drvr_prefixes);
     
