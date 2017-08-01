@@ -180,10 +180,14 @@ std::string GinManager::LoadFile(const std::string path) throw()
     
     std::string type = "NULL";
     std::string id;
+    std::regex valid_prefixes;
+    int i = 0;
     // Read every line in the vector
-    for(int i = 0; i < lines.size(); i++)
+    for(std::vector<std::string>::iterator it = lines.begin();
+            it != lines.end(); ++it)
     {
-        std::string line = lines.at(i);
+        std::string line = *it;
+        i++;
         // Indentation does not matter now, so get rid of it before problems
         while(line.front() == ' ' || line.front() == '\t')
         {
@@ -207,13 +211,36 @@ std::string GinManager::LoadFile(const std::string path) throw()
                     type = prefix;
                     
                     /*
-                     * NOTE: Future shortenings go here.
+                     * Conditions over type, including:
+                     *  - regex setting
+                     *  - shortenings
                      */
-                    // If character is unshortened, shorten it
                     if(type == "character")
                     {
                         type = "char";
+                        valid_prefixes = m_char_prefixes_regex;
                     }
+                    else if(type == "char")
+                    {
+                        valid_prefixes = m_char_prefixes_regex;
+                    }
+                    else if(type == "location")
+                    {
+                        valid_prefixes = m_loc_prefixes_regex;
+                    }
+                    else if(type == "event" || type == "scene")
+                    {
+                        valid_prefixes = m_scne_prefixes_regex;
+                    }
+                    else if(type == "menu")
+                    {
+                        valid_prefixes = m_menu_prefixes_regex;
+                    }
+                    else if(type == "driver")
+                    {
+                        valid_prefixes = m_drvr_prefixes_regex;
+                    }
+                    
                     
                     // Get the identifier
                     id = line.substr(prefix.size() + 1);
@@ -225,36 +252,43 @@ std::string GinManager::LoadFile(const std::string path) throw()
                 // If it is, throw TwoType_Error
                 else
                 {
-                    throw TwoType_Error(path, std::to_string(i));
+                    throw TwoType_Error(path, i+1);
                 }
             }
             // If it does not, throw ArgsMismatch_Error
             else
             {
-                throw ArgsMismatch_Error(path, std::to_string(i));
+                throw ArgsMismatch_Error(path, i+1);
             }
         }
+        
         /*
          * FUTURE PREFIX IMPLEMENTATIONS GO HERE
          */
-        else if(true)
-        {
-            
-        }
+        
         /*
          * Remove all comment / all-whitespace lines
          */
-        else if(prefix.empty() || prefix.front() == '#')
+        else if(!std::regex_match(prefix,std::regex("\\S+")) ||
+                prefix.front() == '#')
         {
-            lines.erase(lines.cbegin()+i);
-            i--;
+            it = lines.erase(it);
         }
         /*
-         * If prefix does not match anything else, throw UnknownPrefix_Error
+         * If a valid prefix, but not for this object's type,
+         *      throw WrongPrefix_Error
          */
-        else
+        else if(std::regex_match(prefix,m_all_prefixes_regex) &&
+                !std::regex_match(prefix,valid_prefixes))
         {
-            throw UnknownPrefix_Error(path, std::to_string(i));
+            throw WrongPrefix_Error(path, i+1);
+        }
+        /*
+         * If prefix does not match any valid prefix, throw UnknownPrefix_Error
+         */
+        else if(!std::regex_match(prefix,m_all_prefixes_regex))
+        {
+            throw UnknownPrefix_Error(path, i+1);
         }
     }
     

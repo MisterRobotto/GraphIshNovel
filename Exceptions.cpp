@@ -12,11 +12,13 @@
 class Gin_Error : public std::exception
 {
     public:
-        explicit Gin_Error (const std::string& file, const std::string& line,
+        explicit Gin_Error (const std::string& file, const int& line,
                 const std::string& error)
         {
             m_file = file.substr(file.find_last_of("\\")+1);
-            m_line = line;
+            std::cout << line << std::endl;
+            m_line = std::to_string(line);
+            std::cout << m_line << std::endl;
             m_error = error;
         }
         virtual const char* what() const throw()
@@ -38,7 +40,7 @@ class ArgsMismatch_Error : public Gin_Error
 {
     public:
         explicit ArgsMismatch_Error (const std::string& file,
-                const std::string& line) : Gin_Error(file, line,
+                const int& line) : Gin_Error(file, line,
                         "Given and expected argument counts do not match"){}
 };
 
@@ -50,7 +52,7 @@ class TwoType_Error : public Gin_Error
 {
     public:
         explicit TwoType_Error (const std::string& file,
-                const std::string& line) : Gin_Error(file, line,
+                const int& line) : Gin_Error(file, line,
                         "Object type is defined a second time"){}
 };
 
@@ -59,6 +61,15 @@ class UnknownPrefix_Error : public Gin_Error
 {
     public:
         explicit UnknownPrefix_Error (const std::string& file,
-                const std::string& line) : Gin_Error(file, line,
+                const int& line) : Gin_Error(file, line,
                         "Unknown or invalid prefix given"){}
+};
+
+
+class WrongPrefix_Error : public Gin_Error
+{
+    public:
+        explicit WrongPrefix_Error (const std::string& file,
+                const int& line) : Gin_Error(file, line,
+                        "Prefix of wrong type present"){}
 };
