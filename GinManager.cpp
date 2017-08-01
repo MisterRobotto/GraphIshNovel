@@ -77,7 +77,8 @@ void GinManager::LoadSettings()
             m_char_prefixes.end());
     
     /*
-     * Valid Location Prefixes [TODO]
+     * Valid Location Prefixes
+     * (WARNING: Highly subject to change)
      */
     m_loc_prefixes.push_back("background");
     m_loc_prefixes.push_back("events");
@@ -113,9 +114,17 @@ void GinManager::LoadSettings()
             m_scne_prefixes.end());
     
     /*
-     * Valid Menu Prefixes [TODO]
+     * Valid Menu Prefixes
+     * (WARNING: Highly subject to change)
      */
-    m_menu_prefixes.push_back("");
+    m_menu_prefixes.push_back("section");
+    m_menu_prefixes.push_back("button");
+    m_menu_prefixes.push_back("image");
+    m_menu_prefixes.push_back("position");
+    m_menu_prefixes.push_back("dropdown");
+    m_menu_prefixes.push_back("play");
+    m_menu_prefixes.push_back("start");
+    m_menu_prefixes.push_back("set");
     
     m_menu_prefixes_regex = MakeRegex(m_menu_prefixes);
     
