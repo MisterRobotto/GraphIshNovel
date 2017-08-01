@@ -39,8 +39,7 @@ class ArgsMismatch_Error : public Gin_Error
     public:
         explicit ArgsMismatch_Error (const std::string& file,
                 const std::string& line) : Gin_Error(file, line,
-                        "Given and expected numbers of arguments do not match")
-                {}
+                        "Given and expected argument counts do not match"){}
 };
 
 
@@ -52,8 +51,7 @@ class TwoType_Error : public Gin_Error
     public:
         explicit TwoType_Error (const std::string& file,
                 const std::string& line) : Gin_Error(file, line,
-                        "Object type is defined a second time")
-                {}
+                        "Object type is defined a second time"){}
 };
 
 
@@ -62,6 +60,5 @@ class UnknownPrefix_Error : public Gin_Error
     public:
         explicit UnknownPrefix_Error (const std::string& file,
                 const std::string& line) : Gin_Error(file, line,
-                        "Unknown or invalid prefix given")
-                {}
+                        "Unknown or invalid prefix given"){}
 };

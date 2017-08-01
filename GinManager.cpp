@@ -79,7 +79,11 @@ void GinManager::LoadSettings()
     /*
      * Valid Location Prefixes [TODO]
      */
-    m_loc_prefixes.push_back("");
+    m_loc_prefixes.push_back("background");
+    m_loc_prefixes.push_back("events");
+    m_loc_prefixes.push_back("map_name");
+    m_loc_prefixes.push_back("referred");
+    m_loc_prefixes.push_back("adjacent");
     
     m_loc_prefixes_regex = MakeRegex(m_loc_prefixes);
     
@@ -133,9 +137,9 @@ void GinManager::LoadSettings()
     /*
      * Variable Types
      *\/
-    m_var_types.push_back("int");
+    m_var_types.push_back("int"double"););
     m_var_types.push_back("string");
-    m_var_types.push_back("double");
+    m_var_types.push_back("
     m_var_types.push_back("bool");
      */
     
