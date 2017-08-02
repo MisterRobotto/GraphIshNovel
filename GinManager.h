@@ -61,6 +61,14 @@ protected:
     
     // All Valid Prefixes
     std::regex m_all_prefixes_regex;
+    
+    // "Collection" types
+    std::vector<std::string> m_collections;
+    std::regex m_collections_regex;
+    
+    // Check for colons at the end
+    std::vector<std::string> m_colon_check;
+    std::regex m_colon_check_regex;
 private:
     void LoadSettings();
     std::string LoadFile(const std::string file) throw();

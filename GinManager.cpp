@@ -38,8 +38,10 @@ GinManager::~GinManager() {
  * Post: Defines settings:
  *          - m_object_types (vector of object types)
  *              - m_object_types_regex (regex OR of all object types)
- *          - m_char_prefixes (vector of valid char prefixes)
- *              - m_char_prefixes_regex (associated regex OR)
+ *          - vectors of valid object prefixes
+ *              - associated regex ORs
+ *          - m_collections (vector of "collection" types)
+ *              - m_collections_regex (regex OR of "collection" types)
  */
 void GinManager::LoadSettings()
 {
@@ -135,7 +137,7 @@ void GinManager::LoadSettings()
      * Valid Driver Prefixes
      * (WARNING: Highly subject to change)
      */
-    m_drvr_prefixes.push_back("@MAIN_DRIVER");
+    m_drvr_prefixes.push_back("MAIN_DRIVER");
     m_drvr_prefixes.push_back("vars");
     m_drvr_prefixes.push_back("start");
     m_drvr_prefixes.push_back("include");
@@ -157,6 +159,34 @@ void GinManager::LoadSettings()
      */
     
     m_all_prefixes_regex = MakeRegex(all_prefixes);
+    
+    /*
+     * "Collection" Types
+     * "Collections" are structures that have nested statements that do not
+     *      have a valid prefix. For now, we ignore them.
+     */
+    m_collections.push_back("events");
+    m_collections.push_back("adjacent");
+    m_collections.push_back("include");
+    // [TODO] When variable types are implemented, remove the following line
+    m_collections.push_back("vars");
+    
+    // Collection types will all end with a colon so just roll them in
+    m_colon_check.insert(m_colon_check.end(), m_collections.begin(),
+            m_collections.end());
+    
+    m_collections_regex = MakeRegex(m_collections);
+    
+    /*
+     * Colon Check List
+     * Any statement that needs to end with a colon
+     */
+    m_colon_check.push_back("if");
+    m_colon_check.push_back("elif");
+    m_colon_check.push_back("else");
+    m_colon_check.push_back("while");
+    m_colon_check.push_back("choice");
+    m_colon_check.push_back("response");
 }
 
 /*
@@ -178,6 +208,10 @@ std::string GinManager::LoadFile(const std::string path) throw()
         lines.push_back(chr_input);
     }
     
+    
+    bool in_collection;
+    int coll_indent;
+    
     std::string type = "NULL";
     std::string id;
     std::regex valid_prefixes;
@@ -188,18 +222,47 @@ std::string GinManager::LoadFile(const std::string path) throw()
     {
         std::string line = *it;
         i++;
-        // Indentation does not matter now, so get rid of it before problems
+        
+        int curr_indent = 0;
+        /*
+         * Indentation does not matter now, so get rid of it before problems
+         *      Keep track of indentation, though
+         */
         while(line.front() == ' ' || line.front() == '\t')
         {
             line.erase(0,1);
+            curr_indent++;
         }
         std::string prefix = line.substr(0,line.find_first_of(" "));
+        
+        // If prefix ends with a colon, drop it
+        if(prefix.back() == ':')
+        {
+            prefix.pop_back();
+        }
+        
+        /*
+         * If curr_indent is not greater than coll_indent and isn't a comment
+         *      or whitespace, then we're not in a collection anymore
+         */
+        if(curr_indent <= coll_indent &&
+                !(!std::regex_match(prefix,std::regex("\\S+")) ||
+                prefix.front() == '#'))
+        {
+            coll_indent = 0;
+            in_collection = false;
+        }
+        
+        /*
+         * If in collection, just skip it (for now)
+         */
+        if(in_collection){}
         
         /*
          * CHECK IF OBJECT TYPE DECLARATION
          */
         // If the prefix is an object type
-        if(std::regex_match(prefix, m_object_types_regex))
+        else if(std::regex_match(prefix, m_object_types_regex))
         {
             // If it has two arguments
             if(HasArgs(line,2))
@@ -273,7 +336,9 @@ std::string GinManager::LoadFile(const std::string path) throw()
                 prefix.front() == '#')
         {
             it = lines.erase(it);
+            --it;
         }
+        
         /*
          * If a valid prefix, but not for this object's type,
          *      throw WrongPrefix_Error
@@ -283,6 +348,16 @@ std::string GinManager::LoadFile(const std::string path) throw()
         {
             throw WrongPrefix_Error(path, i+1);
         }
+        
+        /*
+         * If a "collection" type, go into collection mode
+         */
+        else if(std::regex_match(prefix,m_collections_regex))
+        {
+            coll_indent = curr_indent;
+            in_collection = true;
+        }
+        
         /*
          * If prefix does not match any valid prefix, throw UnknownPrefix_Error
          */
@@ -290,6 +365,14 @@ std::string GinManager::LoadFile(const std::string path) throw()
         {
             throw UnknownPrefix_Error(path, i+1);
         }
+    }
+    
+    /*
+     * If type was never defined, throw NoType_Error
+     */
+    if(type == "NULL")
+    {
+        throw NoType_Error(path);
     }
     
     std::cout << type << " " << id << std::endl;
@@ -355,13 +438,6 @@ void GinManager::LoadDirectory(const std::string path)
         else if(type = 'i')
         {
             LoadDirectory(file);
-        }
-        
-        // Else if type is 's', load this file and set m_driver as its id
-        else if(type == 's')
-        {
-            file = curr_directory + file;
-            m_driver = LoadFile(file);
         }
     }
 }

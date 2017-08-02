@@ -28,8 +28,11 @@ class Gin_Error : public std::exception
         }
         virtual const char* what() const throw()
         {
-            return (m_error + " in file ").append(m_file + " at line ")
-                    .append(m_line).c_str();
+            if(m_line == std::to_string(-1))
+                return (m_error + " in file ").append(m_file).c_str();
+            else
+                return (m_error + " in file ").append(m_file + " at line ")
+                        .append(m_line).c_str();
         }
     protected:
         std::string m_file;
@@ -89,4 +92,12 @@ class WrongPrefix_Error : public Gin_Error
         explicit WrongPrefix_Error (const std::string& file,
                 const std::string& line) : Gin_Error(file, line,
                         "Prefix of wrong type present"){}
+};
+
+
+class NoType_Error : public Gin_Error
+{
+    public:
+        explicit NoType_Error (const std::string& file) : Gin_Error(file, -1,
+                        "No type defined"){}
 };

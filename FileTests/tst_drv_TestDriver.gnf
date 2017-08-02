@@ -1,1 +1,10 @@
+# Test Driver
 
+driver DRVR_TEST
+
+MAIN_DRIVER
+
+vars:
+    int test_integer
+    bool test_boolean
+    string test_string
