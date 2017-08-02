@@ -66,6 +66,9 @@ protected:
     std::vector<std::string> m_collections;
     std::regex m_collections_regex;
     
+    // Validate number of arguments
+    std::map<std::string,int> m_arg_count;
+    
     // Check for colons at the end
     std::vector<std::string> m_colon_check;
     std::regex m_colon_check_regex;

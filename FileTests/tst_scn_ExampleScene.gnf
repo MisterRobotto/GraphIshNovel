@@ -25,7 +25,7 @@ flow start:
 	int complete = 0
 	
 	# Repeats prompt while complete == 0 (ie. until it's branched)
-	while complete == 0:
+	while (complete == 0):
 	
 		# Poses user choice, using |testchar|'s color for the prompt
 		choice "!{|testchar|} So what do you think about this?":

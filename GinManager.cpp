@@ -67,48 +67,97 @@ void GinManager::LoadSettings()
      * Valid Character prefixes
      */
     m_char_prefixes.push_back("name");
+    m_arg_count["name"] = 2;
+    
     m_char_prefixes.push_back("prefer");
+    m_arg_count["prefer"] = 2;
+    
     m_char_prefixes.push_back("short");
+    m_arg_count["short"] = 2;
+    
     m_char_prefixes.push_back("color");
+    m_arg_count["color"] = 2;
+    
     m_char_prefixes.push_back("image");
+    m_arg_count["image"] = 2;
+    
     m_char_prefixes.push_back("say");
+    m_arg_count["say"] = 3;
+    
     
     m_char_prefixes_regex = MakeRegex(m_char_prefixes);
     
     all_prefixes.insert(all_prefixes.end(), m_char_prefixes.begin(),
             m_char_prefixes.end());
     
+    
     /*
      * Valid Location Prefixes
      * (WARNING: Highly subject to change)
      */
     m_loc_prefixes.push_back("background");
+    m_arg_count["background"] = 2;
+    
     m_loc_prefixes.push_back("events");
+    m_arg_count["events"] = 1;
+    
     m_loc_prefixes.push_back("map_name");
+    m_arg_count["map_name"] = 2;
+    
     m_loc_prefixes.push_back("referred");
+    m_arg_count["referred"] = 2;
+    
     m_loc_prefixes.push_back("adjacent");
+    m_arg_count["adjacent"] = 1;
+    
     
     m_loc_prefixes_regex = MakeRegex(m_loc_prefixes);
     
     all_prefixes.insert(all_prefixes.end(), m_loc_prefixes.begin(),
             m_loc_prefixes.end());
     
+    
     /*
      * Valid Scene Prefixes
      */
     m_scne_prefixes.push_back("setting");
+    m_arg_count["setting"] = 2;
+    
     m_scne_prefixes.push_back("start_flow");
+    m_arg_count["start_flow"] = 2;
+    
     m_scne_prefixes.push_back("flow");
+    m_arg_count["flow"] = 2;
+    
     m_scne_prefixes.push_back("say");
+    m_arg_count["say"] = 3;
+    
     m_scne_prefixes.push_back("if");
+    m_arg_count["if"] = 2;
+    
     m_scne_prefixes.push_back("elif");
+    m_arg_count["elif"] = 2;
+    
     m_scne_prefixes.push_back("else");
+    m_arg_count["else"] = 1;
+    
     m_scne_prefixes.push_back("while");
+    m_arg_count["while"] = 2;
+    
     m_scne_prefixes.push_back("play");
+    m_arg_count["play"] = 2;
+    
     m_scne_prefixes.push_back("branch");
+    m_arg_count["branch"] = 2;
+    
     m_scne_prefixes.push_back("display");
+    m_arg_count["display"] = 2;
+    
     m_scne_prefixes.push_back("choice");
+    m_arg_count["choice"] = 2;
+    
     m_scne_prefixes.push_back("response");
+    m_arg_count["response"] = 2;
     
     m_scne_prefixes_regex = MakeRegex(m_scne_prefixes);
     
@@ -120,13 +169,28 @@ void GinManager::LoadSettings()
      * (WARNING: Highly subject to change)
      */
     m_menu_prefixes.push_back("section");
+    m_arg_count["section"] = 2;
+    
     m_menu_prefixes.push_back("button");
+    m_arg_count["button"] = 2;
+    
     m_menu_prefixes.push_back("image");
+    m_arg_count["image"] = 2;
+    
     m_menu_prefixes.push_back("position");
+    m_arg_count["position"] = 3;
+    
     m_menu_prefixes.push_back("dropdown");
+    m_arg_count["dropdown"] = 2;
+    
     m_menu_prefixes.push_back("play");
+    m_arg_count["play"] = 2;
+    
     m_menu_prefixes.push_back("start");
+    m_arg_count["start"] = 2;
+    
     m_menu_prefixes.push_back("set");
+    m_arg_count["set"] = 2;
     
     m_menu_prefixes_regex = MakeRegex(m_menu_prefixes);
     
@@ -138,9 +202,16 @@ void GinManager::LoadSettings()
      * (WARNING: Highly subject to change)
      */
     m_drvr_prefixes.push_back("MAIN_DRIVER");
+    m_arg_count["MAIN_DRIVER"] = 1;
+    
     m_drvr_prefixes.push_back("vars");
+    m_arg_count["vars"] = 1;
+    
     m_drvr_prefixes.push_back("start");
+    m_arg_count["start"] = 2;
+    
     m_drvr_prefixes.push_back("include");
+    m_arg_count["include"] = 1;
     
     m_drvr_prefixes_regex = MakeRegex(m_drvr_prefixes);
     
@@ -152,9 +223,9 @@ void GinManager::LoadSettings()
     /*
      * Variable Types
      *\/
-    m_var_types.push_back("int"double"););
+    m_var_types.push_back("int");
     m_var_types.push_back("string");
-    m_var_types.push_back("
+    m_var_types.push_back("double");
     m_var_types.push_back("bool");
      */
     
@@ -318,13 +389,13 @@ std::string GinManager::LoadFile(const std::string path) throw()
                 // If it is, throw TwoType_Error
                 else
                 {
-                    throw TwoType_Error(path, i+1);
+                    throw TwoType_Error(path, i);
                 }
             }
             // If it does not, throw ArgsMismatch_Error
             else
             {
-                throw ArgsMismatch_Error(path, i+1);
+                throw ArgsMismatch_Error(path, i);
             }
         }
         
@@ -349,7 +420,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
         else if(std::regex_match(prefix,m_all_prefixes_regex) &&
                 !std::regex_match(prefix,valid_prefixes))
         {
-            throw WrongPrefix_Error(path, i+1);
+            throw WrongPrefix_Error(path, i);
         }
         
         /*
@@ -371,12 +442,21 @@ std::string GinManager::LoadFile(const std::string path) throw()
         
         
         /*
+         * If line's args do not match prefix's expected args, throw an
+         *      ArgsMismatch_Error
+         */
+        if(m_arg_count.count(prefix) > 0 && !HasArgs(line,m_arg_count[prefix]))
+        {
+            throw ArgsMismatch_Error(path, i);
+        }
+        
+        /*
          * If prefix should be checked for colon and last char isn't a colon,
          *      throw a NoColon_Error
          */
         if(std::regex_match(prefix,m_colon_check_regex) && line.back() != ':')
         {
-            throw NoColon_Error(path, i+1);
+            throw NoColon_Error(path, i);
         }
     }
     
@@ -431,8 +511,6 @@ void GinManager::LoadDirectory(const std::string path)
         type = directory.at(i).at(0);
         file = directory.at(i).substr(2);
         
-        std::cout << file << std::endl;
-        
         // If type is 'd', set the current directory
         if(type == 'd')
         {
@@ -467,23 +545,37 @@ void GinManager::LoadDirectory(const std::string path)
  */
 bool GinManager::HasArgs(std::string line, int arg_num)
 {
+    try{
     /*
      * Note to future users: the regex bit for an arg, with or without quotes,
-     *  is (\w+|"[^"\n]+")
+     *  braces, or parenteses
+     *  is ((\w|-)+|"[^"\n]+"|\([^\(\)\n]+\)|{[^{}\n]+})
+     * 
+     * [TODO] but y tho... see error 9
      */
+    std::string arg_bit = "((\\w|-)+|\"[^\"]+\"|\\([^\\(\\)]+\\)|{[^\\{\\}]+})";
     // Start with start-of-line flag, open-paren, and a regex bit for an arg
-    std::string regex_test_str = "^((\\w+|\"[^\"\n]+\")";
+    std::string regex_test_str = "^(" + arg_bit;
     // From 1 to arg_num (ie. arg_num - 1 times)
     for(int i = 1; i < arg_num; i++)
     {
         // Add the regex bit for an arg
-        regex_test_str.append(" (\\w+|\"[^\"\n]+\")");
+        regex_test_str.append(" " + arg_bit);
     }
     // End with a close-paren and end-of-line flag
     regex_test_str.append(")$");
+    std::cout << regex_test_str << std::endl;
     std::regex regex_test_rgx(regex_test_str);
     
     return std::regex_match(line, regex_test_rgx);
+    }
+    catch(std::regex_error& e)
+    {
+        std::cout << e.code() << std::endl;
+        if(e.code() == std::regex_constants::error_paren)
+            std::cout << "error_paren" << std::endl;
+        throw;
+    }
 }
 
 
