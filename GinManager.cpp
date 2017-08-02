@@ -181,12 +181,15 @@ void GinManager::LoadSettings()
      * Colon Check List
      * Any statement that needs to end with a colon
      */
+    m_colon_check.push_back("flow");
     m_colon_check.push_back("if");
     m_colon_check.push_back("elif");
     m_colon_check.push_back("else");
     m_colon_check.push_back("while");
     m_colon_check.push_back("choice");
     m_colon_check.push_back("response");
+    
+    m_colon_check_regex = MakeRegex(m_colon_check);
 }
 
 /*
@@ -261,7 +264,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
         /*
          * CHECK IF OBJECT TYPE DECLARATION
          */
-        // If the prefix is an object type
+        // Else if the prefix is an object type
         else if(std::regex_match(prefix, m_object_types_regex))
         {
             // If it has two arguments
@@ -330,7 +333,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
          */
         
         /*
-         * Remove all comment / all-whitespace lines
+         * Else if a comment / all-whitespace line, remove it
          */
         else if(!std::regex_match(prefix,std::regex("\\S+")) ||
                 prefix.front() == '#')
@@ -340,7 +343,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
         }
         
         /*
-         * If a valid prefix, but not for this object's type,
+         * Else if a valid prefix, but not for this object's type,
          *      throw WrongPrefix_Error
          */
         else if(std::regex_match(prefix,m_all_prefixes_regex) &&
@@ -350,7 +353,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
         }
         
         /*
-         * If a "collection" type, go into collection mode
+         * Else if a "collection" type, go into collection mode
          */
         else if(std::regex_match(prefix,m_collections_regex))
         {
@@ -359,11 +362,21 @@ std::string GinManager::LoadFile(const std::string path) throw()
         }
         
         /*
-         * If prefix does not match any valid prefix, throw UnknownPrefix_Error
+         * Else if prefix does not match any valid prefix, throw UnknownPrefix_Error
          */
         else if(!std::regex_match(prefix,m_all_prefixes_regex))
         {
             throw UnknownPrefix_Error(path, i+1);
+        }
+        
+        
+        /*
+         * If prefix should be checked for colon and last char isn't a colon,
+         *      throw a NoColon_Error
+         */
+        if(std::regex_match(prefix,m_colon_check_regex) && line.back() != ':')
+        {
+            throw NoColon_Error(path, i+1);
         }
     }
     
@@ -382,6 +395,8 @@ std::string GinManager::LoadFile(const std::string path) throw()
      */
     // TODO: ^ that
     //      See also issue #3
+    
+    return id;
 }
 
 /* 
@@ -416,6 +431,8 @@ void GinManager::LoadDirectory(const std::string path)
         type = directory.at(i).at(0);
         file = directory.at(i).substr(2);
         
+        std::cout << file << std::endl;
+        
         // If type is 'd', set the current directory
         if(type == 'd')
         {
@@ -435,7 +452,7 @@ void GinManager::LoadDirectory(const std::string path)
         }
         
         // Else if type is 'i', load a different directory
-        else if(type = 'i')
+        else if(type == 'i')
         {
             LoadDirectory(file);
         }

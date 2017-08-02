@@ -101,3 +101,15 @@ class NoType_Error : public Gin_Error
         explicit NoType_Error (const std::string& file) : Gin_Error(file, -1,
                         "No type defined"){}
 };
+
+
+class NoColon_Error : public Gin_Error
+{
+    public:
+        explicit NoColon_Error (const std::string& file,
+                const int& line) : Gin_Error(file, line,
+                        "Colon needed but not present"){}
+        explicit NoColon_Error (const std::string& file,
+                const std::string& line) : Gin_Error(file, line,
+                        "Colon needed but not present"){}
+};
