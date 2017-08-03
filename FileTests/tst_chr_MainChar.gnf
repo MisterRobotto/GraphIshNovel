@@ -9,6 +9,6 @@ color 3c11d8
 
 # Say Styles
 
-say default {...}
+say default "{...}"
 
-say think [i]{...}[\i]
+say think "[i]{...}[\i]"

@@ -395,6 +395,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
             // If it does not, throw ArgsMismatch_Error
             else
             {
+                std::cout << "\"" << line << "\"" << std::endl;
                 throw ArgsMismatch_Error(path, i);
             }
         }
@@ -447,6 +448,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
          */
         if(m_arg_count.count(prefix) > 0 && !HasArgs(line,m_arg_count[prefix]))
         {
+            std::cout << "\"" << line << "\"" << std::endl;
             throw ArgsMismatch_Error(path, i);
         }
         
@@ -546,25 +548,18 @@ void GinManager::LoadDirectory(const std::string path)
 bool GinManager::HasArgs(std::string line, int arg_num)
 {
     try{
-    /*
-     * Note to future users: the regex bit for an arg, with or without quotes,
-     *  braces, or parenteses
-     *  is ((\w|-)+|"[^"\n]+"|\([^\(\)\n]+\)|{[^{}\n]+})
-     * 
-     * [TODO] but y tho... see error 9
-     */
-    std::string arg_bit = "((\\w|-)+|\"[^\"]+\"|\\([^\\(\\)]+\\)|{[^\\{\\}]+})";
+    // Set the single-argument test
+    std::string arg_bit = "([^\"\\s]+|\"[^\"]+\"|\\([^\\(\\)]+\\))";
     // Start with start-of-line flag, open-paren, and a regex bit for an arg
     std::string regex_test_str = "^(" + arg_bit;
     // From 1 to arg_num (ie. arg_num - 1 times)
     for(int i = 1; i < arg_num; i++)
     {
-        // Add the regex bit for an arg
+        // Add another single-argument test
         regex_test_str.append(" " + arg_bit);
     }
     // End with a close-paren and end-of-line flag
     regex_test_str.append(")$");
-    std::cout << regex_test_str << std::endl;
     std::regex regex_test_rgx(regex_test_str);
     
     return std::regex_match(line, regex_test_rgx);
