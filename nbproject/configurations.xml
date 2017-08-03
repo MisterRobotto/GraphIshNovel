@@ -10,7 +10,6 @@
       <itemPath>Event.h</itemPath>
       <itemPath>Flow.h</itemPath>
       <itemPath>GinManager.h</itemPath>
-      <itemPath>IGinObject.h</itemPath>
       <itemPath>INode.h</itemPath>
       <itemPath>Location.h</itemPath>
       <itemPath>Menu.h</itemPath>
@@ -30,7 +29,6 @@
       <itemPath>Exceptions.cpp</itemPath>
       <itemPath>Flow.cpp</itemPath>
       <itemPath>GinManager.cpp</itemPath>
-      <itemPath>IGinObject.cpp</itemPath>
       <itemPath>Location.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
       <itemPath>Scene.cpp</itemPath>
@@ -104,10 +102,6 @@
       <item path="GinManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GinManager.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IGinObject.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="IGinObject.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="INode.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -183,10 +177,6 @@
       <item path="GinManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GinManager.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IGinObject.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="IGinObject.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="INode.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -269,8 +269,7 @@ void GinManager::LoadSettings()
  * Prec: A valid .gnf file path
  * Post: Initializes the object defined in the .gnf file
  */
-std::pair<std::string,IGinObject*>
-        GinManager::LoadFile(const std::string path) throw()
+void GinManager::LoadFile(const std::string path) throw()
 {
     // Load the file's contents into a vector
     std::vector<std::string> lines;
@@ -471,15 +470,13 @@ std::pair<std::string,IGinObject*>
         throw NoType_Error(path);
     }
     
-    std::cout << type << " " << id << std::endl;
+    //std::cout << type << " " << id << std::endl;
     
     /*
      * Pass control to function associated with object type
      */
     // TODO: ^ that
     //      See also issue #3
-    
-    return std::pair<std::string, IGinObject*>(id, new IGinObject);
 }
 
 /* 
@@ -535,7 +532,7 @@ void GinManager::LoadDirectory(const std::string path)
             try
             {
                 file = curr_directory + file;
-                delete LoadFile(file).second;
+                LoadFile(file);
             }
             catch(TwoMainDriver_Error e)
             {

@@ -42,7 +42,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/Exceptions.o \
 	${OBJECTDIR}/Flow.o \
 	${OBJECTDIR}/GinManager.o \
-	${OBJECTDIR}/IGinObject.o \
 	${OBJECTDIR}/Location.o \
 	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/Scene.o \
@@ -107,11 +106,6 @@ ${OBJECTDIR}/GinManager.o: GinManager.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GinManager.o GinManager.cpp
-
-${OBJECTDIR}/IGinObject.o: IGinObject.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/IGinObject.o IGinObject.cpp
 
 ${OBJECTDIR}/Location.o: Location.cpp
 	${MKDIR} -p ${OBJECTDIR}
