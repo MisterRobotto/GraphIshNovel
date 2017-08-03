@@ -21,7 +21,10 @@ public:
     Driver();
     Driver(const Driver& orig);
     virtual ~Driver();
+    
+    bool IsMainDriver();
 private:
+    bool m_main_driver;
 
 };
 

@@ -15,15 +15,15 @@
 #define EVENT_H
 
 #include "Flow.h"
-#include "INode.h"
 
 #include <map>
 #include <string>
 #include <vector>
 
-class Event : public INode {
+class Event {
 public:
     Event();
+    Event(std::vector<std::string> lines);
     Event(const Event& orig);
     virtual ~Event();
     virtual void Run();

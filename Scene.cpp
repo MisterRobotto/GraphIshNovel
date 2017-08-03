@@ -15,7 +15,7 @@
 
 #include "Scene.h"
 
-Scene::Scene() {
+Scene::Scene(std::vector<std::string> lines) {
 }
 
 Scene::Scene(const Scene& orig) {

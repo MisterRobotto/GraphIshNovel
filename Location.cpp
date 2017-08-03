@@ -13,7 +13,8 @@
 
 #include "Location.h"
 
-Location::Location() {
+
+Location::Location(std::vector<std::string> lines) {
 }
 
 Location::Location(const Location& orig) {

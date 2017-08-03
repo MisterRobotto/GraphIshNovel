@@ -36,6 +36,7 @@ GinManager::~GinManager() {
  * Desc: Defines some settings, such as object type vector
  * Prec: None -- runs only when new instance created
  * Post: Defines settings:
+ *          - m_driver as NULL
  *          - m_object_types (vector of object types)
  *              - m_object_types_regex (regex OR of all object types)
  *          - vectors of valid object prefixes
@@ -44,7 +45,7 @@ GinManager::~GinManager() {
  *              - m_collections_regex (regex OR of "collection" types)
  */
 void GinManager::LoadSettings()
-{
+{    
     std::vector<std::string> all_prefixes;
     
     /*
@@ -468,15 +469,47 @@ void GinManager::LoadFile(const std::string path) throw()
     if(type == "NULL")
     {
         throw NoType_Error(path);
+    }    
+    /*
+     * Create associated object, add it to m_objects and the relevant
+     *      type vector
+     */
+    // Character
+    else if(type == "char")
+    {
+        m_objects[id] = character;
+        m_characters[id] = new Character(lines);
+    }
+    //Driver
+    else if(type == "driver")
+    {
+        // [TODO]
+    }
+    // Event
+    else if(type == "event")
+    {
+        m_objects[id] = event;
+        m_events[id] = new Event(lines);
+    }
+    // Location
+    else if(type == "location")
+    {
+        m_objects[id] = location;
+        m_locations[id] = new Location(lines);
+    }
+    // Menu
+    else if(type == "menu")
+    {
+        m_objects[id] = menu;
+        m_menus[id] = new Menu(lines);
+    }
+    // Scene
+    else if(type == "scene")
+    {
+        m_objects[id] = scene;
+        m_scenes[id] = new Scene(lines);
     }
     
-    //std::cout << type << " " << id << std::endl;
-    
-    /*
-     * Pass control to function associated with object type
-     */
-    // TODO: ^ that
-    //      See also issue #3
 }
 
 /* 

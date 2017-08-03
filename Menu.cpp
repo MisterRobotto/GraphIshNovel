@@ -13,7 +13,8 @@
 
 #include "Menu.h"
 
-Menu::Menu() {
+
+Menu::Menu(std::vector<std::string> lines) {
 }
 
 Menu::Menu(const Menu& orig) {

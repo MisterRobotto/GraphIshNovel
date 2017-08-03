@@ -14,9 +14,12 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 
+#include <vector>
+#include <string>
+
 class Location {
 public:
-    Location();
+    Location(std::vector<std::string> lines);
     Location(const Location& orig);
     virtual ~Location();
 private:

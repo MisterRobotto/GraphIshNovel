@@ -13,7 +13,8 @@
 
 #include "Character.h"
 
-Character::Character() {
+
+Character::Character(std::vector<std::string> lines) {
 }
 
 Character::Character(const Character& orig) {

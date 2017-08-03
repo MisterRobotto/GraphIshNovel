@@ -22,3 +22,14 @@ Driver::Driver(const Driver& orig) {
 Driver::~Driver() {
 }
 
+
+/*
+ * Name: IsMainDriver
+ * Desc: Returns whether or not the driver object is declared as the main driver
+ * Prec: None
+ * Post: Returns m_main_driver
+ */
+bool Driver::IsMainDriver()
+{
+    return m_main_driver;
+}

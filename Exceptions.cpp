@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
+#ifndef GIN_EXCEPTIONS
+#define GIN_EXCEPTIONS
+
 #include <exception>
 #include <string>
-
-#include <iostream>
 
 class Gin_Error : public std::exception
 {
@@ -125,3 +126,5 @@ class TwoMainDriver_Error : public Gin_Error
                 const std::string& line) : Gin_Error(file, line,
                         "Second MAIN_DRIVER declared"){}
 };
+
+#endif /* GIN_EXCEPTIONS */

@@ -10,7 +10,6 @@
       <itemPath>Event.h</itemPath>
       <itemPath>Flow.h</itemPath>
       <itemPath>GinManager.h</itemPath>
-      <itemPath>INode.h</itemPath>
       <itemPath>Location.h</itemPath>
       <itemPath>Menu.h</itemPath>
       <itemPath>Scene.h</itemPath>
@@ -32,6 +31,7 @@
       <itemPath>Location.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
       <itemPath>Scene.cpp</itemPath>
+      <itemPath>TypeEnums.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -103,8 +103,6 @@
       </item>
       <item path="GinManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="INode.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Location.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Location.h" ex="false" tool="3" flavor2="0">
@@ -116,6 +114,8 @@
       <item path="Scene.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Scene.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TypeEnums.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -178,8 +178,6 @@
       </item>
       <item path="GinManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="INode.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Location.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Location.h" ex="false" tool="3" flavor2="0">
@@ -191,6 +189,8 @@
       <item path="Scene.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Scene.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TypeEnums.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

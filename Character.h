@@ -20,7 +20,7 @@
 
 class Character {
 public:
-    Character();
+    Character(std::vector<std::string> lines);
     Character(const Character& orig);
     virtual ~Character();
     std::string Say(const std::string style, const std::string input);

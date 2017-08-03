@@ -17,9 +17,12 @@
 #include "Event.h"
 #include "Location.h"
 
+#include <vector>
+#include <string>
+
 class Scene : public Event {
 public:
-    Scene();
+    Scene(std::vector<std::string> lines);
     Scene(const Scene& orig);
     virtual ~Scene();
     virtual void Run();

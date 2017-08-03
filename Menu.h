@@ -14,11 +14,12 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "INode.h"
+#include <vector>
+#include <string>
 
-class Menu : public INode{
+class Menu {
 public:
-    Menu();
+    Menu(std::vector<std::string> lines);
     Menu(const Menu& orig);
     virtual ~Menu();
 private:

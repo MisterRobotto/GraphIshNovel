@@ -14,8 +14,20 @@
 #ifndef GINMANAGER_H
 #define GINMANAGER_H
 
+// Utility files
 #include "Exceptions.cpp"
+#include "TypeEnums.cpp"
 
+// Object classes
+#include "Character.h"
+#include "Driver.h"
+#include "Event.h"
+#include "Location.h"
+#include "Menu.h"
+#include "Scene.h"
+
+
+// Standard library
 #include <string>
 #include <fstream>
 #include <vector>
@@ -74,12 +86,25 @@ protected:
     std::vector<std::string> m_colon_check;
     std::regex m_colon_check_regex;
 private:
+    // Functions
     void LoadSettings();
     void LoadFile(const std::string file) throw();
     void LoadDirectory(const std::string path);
-    std::string m_driver;
     bool HasArgs(std::string line, int arg_num);
     std::regex MakeRegex(std::vector<std::string> vec);
+    
+    // The driver
+    Driver m_driver;
+    
+    // Catalog of all objects and their types, mapped <id, type>
+    std::map<std::string,ObjectType> m_objects;
+    
+    // Catalogs of each type of objects, mapped <id, object>
+    std::map<std::string,Character*> m_characters;
+    std::map<std::string,Event*> m_events;
+    std::map<std::string, Location*> m_locations;
+    std::map<std::string, Menu*> m_menus;
+    std::map<std::string, Scene*> m_scenes;
 };
 
 #endif /* GINMANAGER_H */

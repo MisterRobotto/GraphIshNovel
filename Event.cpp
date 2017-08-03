@@ -13,13 +13,18 @@
 
 #include "Event.h"
 
+Event::Event()
+{
+    
+}
+
 /*
  * Name: Event()
  * Desc: Default constructor
  * Prec: None
  * Post: Creates Event object
  */
-Event::Event()
+Event::Event(std::vector<std::string> lines)
 {
     
 }

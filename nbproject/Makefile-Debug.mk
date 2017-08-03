@@ -45,6 +45,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Location.o \
 	${OBJECTDIR}/Menu.o \
 	${OBJECTDIR}/Scene.o \
+	${OBJECTDIR}/TypeEnums.o \
 	${OBJECTDIR}/main.o
 
 
@@ -121,6 +122,11 @@ ${OBJECTDIR}/Scene.o: Scene.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Scene.o Scene.cpp
+
+${OBJECTDIR}/TypeEnums.o: TypeEnums.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TypeEnums.o TypeEnums.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
