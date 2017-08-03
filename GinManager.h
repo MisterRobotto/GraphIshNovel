@@ -15,12 +15,14 @@
 #define GINMANAGER_H
 
 #include "Exceptions.cpp"
+#include "IGinObject.h"
 
 #include <string>
 #include <fstream>
 #include <vector>
 #include <iostream>
 #include <regex>
+#include <tuple>
 
 class GinManager {
 public:
@@ -74,8 +76,10 @@ protected:
     std::regex m_colon_check_regex;
 private:
     void LoadSettings();
-    std::string LoadFile(const std::string file) throw();
+    std::pair<std::string,IGinObject*>
+            LoadFile(const std::string file) throw();
     void LoadDirectory(const std::string path);
+    std::map<std::string,IGinObject*> m_objects;
     std::string m_driver;
     bool HasArgs(std::string line, int arg_num);
     std::regex MakeRegex(std::vector<std::string> vec);

@@ -4,6 +4,8 @@ driver DRVR_TEST
 
 MAIN_DRIVER
 
+start MENU_MAIN_0001
+
 vars:
     int test_integer
     bool test_boolean

@@ -113,3 +113,15 @@ class NoColon_Error : public Gin_Error
                 const std::string& line) : Gin_Error(file, line,
                         "Colon needed but not present"){}
 };
+
+
+class TwoMainDriver_Error : public Gin_Error
+{
+    public:
+        explicit TwoMainDriver_Error (const std::string& file,
+                const int& line) : Gin_Error(file, line,
+                        "Second MAIN_DRIVER declared"){}
+        explicit TwoMainDriver_Error (const std::string& file,
+                const std::string& line) : Gin_Error(file, line,
+                        "Second MAIN_DRIVER declared"){}
+};

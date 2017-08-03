@@ -269,7 +269,8 @@ void GinManager::LoadSettings()
  * Prec: A valid .gnf file path
  * Post: Initializes the object defined in the .gnf file
  */
-std::string GinManager::LoadFile(const std::string path) throw()
+std::pair<std::string,IGinObject*>
+        GinManager::LoadFile(const std::string path) throw()
 {
     // Load the file's contents into a vector
     std::vector<std::string> lines;
@@ -478,7 +479,7 @@ std::string GinManager::LoadFile(const std::string path) throw()
     // TODO: ^ that
     //      See also issue #3
     
-    return id;
+    return std::pair<std::string, IGinObject*>(id, new IGinObject);
 }
 
 /* 
@@ -527,8 +528,19 @@ void GinManager::LoadDirectory(const std::string path)
         // Else if type is 'f', load the file
         else if(type == 'f')
         {
-            file = curr_directory + file;
-            LoadFile(file);
+            /*
+             * Catch any TwoMainDriver_Error so that the correct info can
+             *      be passed to the error
+             */
+            try
+            {
+                file = curr_directory + file;
+                delete LoadFile(file).second;
+            }
+            catch(TwoMainDriver_Error e)
+            {
+                throw TwoMainDriver_Error(path,i);
+            }
         }
         
         // Else if type is 'i', load a different directory
@@ -547,22 +559,23 @@ void GinManager::LoadDirectory(const std::string path)
  */
 bool GinManager::HasArgs(std::string line, int arg_num)
 {
+    // Try-Catch just in case a change to the Regex makes it flip out
     try{
-    // Set the single-argument test
-    std::string arg_bit = "([^\"\\s]+|\"[^\"]+\"|\\([^\\(\\)]+\\))";
-    // Start with start-of-line flag, open-paren, and a regex bit for an arg
-    std::string regex_test_str = "^(" + arg_bit;
-    // From 1 to arg_num (ie. arg_num - 1 times)
-    for(int i = 1; i < arg_num; i++)
-    {
-        // Add another single-argument test
-        regex_test_str.append(" " + arg_bit);
-    }
-    // End with a close-paren and end-of-line flag
-    regex_test_str.append(")$");
-    std::regex regex_test_rgx(regex_test_str);
-    
-    return std::regex_match(line, regex_test_rgx);
+        // Set the single-argument test
+        std::string arg_bit = "([^\"\\s]+|\"[^\"]+\"|\\([^\\(\\)]+\\))";
+        // Start with start-of-line flag, open-paren, and a single-argument test
+        std::string regex_test_str = "^(" + arg_bit;
+        // From 1 to arg_num (ie. arg_num - 1 times)
+        for(int i = 1; i < arg_num; i++)
+        {
+            // Add another single-argument test
+            regex_test_str.append(" " + arg_bit);
+        }
+        // End with a close-paren and end-of-line flag
+        regex_test_str.append(")$");
+        std::regex regex_test_rgx(regex_test_str);
+
+        return std::regex_match(line, regex_test_rgx);
     }
     catch(std::regex_error& e)
     {

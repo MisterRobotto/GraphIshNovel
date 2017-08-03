@@ -14,14 +14,14 @@
 #ifndef INODE_H
 #define INODE_H
 
+#include "IGinObject.h"
+
 #include <string>
 
 class INode {
 public:
     virtual ~INode(){};
     virtual void Run() = 0;
-protected:
-    std::string m_id;
 };
 
 #endif /* INODE_H */
