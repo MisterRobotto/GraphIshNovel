@@ -438,7 +438,7 @@ void GinManager::LoadFile(const std::string path) throw()
                 // If it is, throw TwoType_Error
                 else
                 {
-                    throw TwoType_Error(path, i);
+                    throw DoubleDef_Error("Object type", path, i);
                 }
             }
             // If it does not, throw ArgsMismatch_Error

@@ -60,15 +60,15 @@ class ArgsMismatch_Error : public Gin_Error
 /*
  * TwoType_Error is used when an object attempts to define its type twice
  */
-class TwoType_Error : public Gin_Error
+class DoubleDef_Error : public Gin_Error
 {
     public:
-        explicit TwoType_Error (const std::string& file,
-                const int& line) : Gin_Error(file, line,
-                        "Object type is defined a second time"){}
-        explicit TwoType_Error (const std::string& file,
-                const std::string& line) : Gin_Error(file, line,
-                        "Object type is defined a second time"){}
+        explicit DoubleDef_Error (const std::string& what,
+                const std::string& file, const int& line)
+            : Gin_Error(file, line, what + " is defined a second time"){}
+        explicit DoubleDef_Error (const std::string& what,
+                const std::string& file, const std::string& line)
+            : Gin_Error(file, line, what + " is defined a second time"){}
 };
 
 

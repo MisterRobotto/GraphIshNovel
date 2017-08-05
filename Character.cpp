@@ -14,7 +14,9 @@
 #include "Character.h"
 
 
-Character::Character(std::vector<std::string> lines) {
+Character::Character(std::vector<std::string> lines)
+{
+    
 }
 
 Character::Character(const Character& orig) {
