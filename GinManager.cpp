@@ -28,7 +28,55 @@ GinManager::GinManager(const std::string path)
 GinManager::GinManager(const GinManager& orig) {
 }
 
-GinManager::~GinManager() {
+
+/*
+ * Name: ~GinManager
+ * Desc: Destructor
+ * Prec: None
+ * Post: Deletes content of and clears pointer maps
+ */
+GinManager::~GinManager()
+{
+    // m_characters
+    for (std::map<std::string,Character*>::iterator it = m_characters.begin() ;
+            it != m_characters.end(); ++it)
+   {
+     delete (*it).second;
+   } 
+   m_characters.clear();
+      
+   // m_events
+    for (std::map<std::string,Event*>::iterator it = m_events.begin() ;
+            it != m_events.end(); ++it)
+   {
+     delete (*it).second;
+   } 
+   m_events.clear();
+   
+   // m_locations
+    for (std::map<std::string,Location*>::iterator it = m_locations.begin() ;
+            it != m_locations.end(); ++it)
+   {
+     delete (*it).second;
+   } 
+   m_locations.clear();
+
+   
+   // m_menus
+    for (std::map<std::string,Menu*>::iterator it = m_menus.begin() ;
+            it != m_menus.end(); ++it)
+   {
+     delete (*it).second;
+   } 
+   m_menus.clear();
+   
+   // m_scenes
+    for (std::map<std::string,Scene*>::iterator it = m_scenes.begin() ;
+            it != m_scenes.end(); ++it)
+   {
+     delete (*it).second;
+   } 
+   m_scenes.clear();
 }
 
 /* [NOTE - REMEMBER TO UPDATE WITH ALL NEW CHANGES ADDED TO FUNCTION]
