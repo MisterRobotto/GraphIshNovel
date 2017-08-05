@@ -91,6 +91,7 @@ private:
     void LoadFile(const std::string file) throw();
     void LoadDirectory(const std::string path);
     bool HasArgs(std::string line, int arg_num);
+    std::vector<std::string> GetArgs(std::string line);
     std::regex MakeRegex(std::vector<std::string> vec);
     
     // The driver

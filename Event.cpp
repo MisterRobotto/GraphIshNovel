@@ -24,7 +24,7 @@ Event::Event()
  * Prec: None
  * Post: Creates Event object
  */
-Event::Event(std::vector<std::string> lines)
+Event::Event(std::vector<std::vector<std::string>> line_args)
 {
     
 }

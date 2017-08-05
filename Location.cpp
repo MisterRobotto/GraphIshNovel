@@ -14,7 +14,7 @@
 #include "Location.h"
 
 
-Location::Location(std::vector<std::string> lines) {
+Location::Location(std::vector<std::vector<std::string>> line_args) {
 }
 
 Location::Location(const Location& orig) {

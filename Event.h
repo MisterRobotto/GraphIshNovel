@@ -23,7 +23,7 @@
 class Event {
 public:
     Event();
-    Event(std::vector<std::string> lines);
+    Event(std::vector<std::vector<std::string>> line_args);
     Event(const Event& orig);
     virtual ~Event();
     virtual void Run();

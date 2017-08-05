@@ -22,7 +22,7 @@
 
 class Scene : public Event {
 public:
-    Scene(std::vector<std::string> lines);
+    Scene(std::vector<std::vector<std::string>> line_args);
     Scene(const Scene& orig);
     virtual ~Scene();
     virtual void Run();

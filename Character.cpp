@@ -13,10 +13,20 @@
 
 #include "Character.h"
 
-
-Character::Character(std::vector<std::string> lines)
+/*
+ * Name: Character( vector < string > )
+ * Desc: Loads Character object from state defined by a file
+ * Prec: Bugswept vector of lines (vector of arguments) from a character
+ *      .GNF file
+ * Post: Creates the Character object
+ */
+Character::Character(std::vector<std::vector<std::string>> line_args)
 {
-    
+    // Preset data to empty
+    m_short = "";
+    m_prefer = "";
+    m_short = "";
+    m_color = "";
 }
 
 Character::Character(const Character& orig) {

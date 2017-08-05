@@ -19,7 +19,7 @@
 
 class Location {
 public:
-    Location(std::vector<std::string> lines);
+    Location(std::vector<std::vector<std::string>> line_args);
     Location(const Location& orig);
     virtual ~Location();
 private:

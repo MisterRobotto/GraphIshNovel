@@ -19,7 +19,7 @@
 
 class Menu {
 public:
-    Menu(std::vector<std::string> lines);
+    Menu(std::vector<std::vector<std::string>> line_args);
     Menu(const Menu& orig);
     virtual ~Menu();
 private:

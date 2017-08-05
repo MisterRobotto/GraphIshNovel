@@ -511,6 +511,19 @@ void GinManager::LoadFile(const std::string path) throw()
         }
     }
     
+        
+    /*
+     * Go through newly-combed lines and create 2D vector of lines' args
+     */
+    std::vector<std::vector<std::string>> line_args;
+    
+    for(std::vector<std::string>::iterator it = lines.begin();
+            it != lines.end(); ++it)
+    {
+        line_args.push_back(GetArgs(*it));
+    }
+    //for(auto x : line_args){for(auto y : x) std::cout << y << " "; std::cout << std::endl;} std::cout << std::endl;
+    
     /*
      * If type was never defined, throw NoType_Error
      */
@@ -526,7 +539,7 @@ void GinManager::LoadFile(const std::string path) throw()
     else if(type == "char")
     {
         m_objects[id] = character;
-        m_characters[id] = new Character(lines);
+        m_characters[id] = new Character(line_args);
     }
     //Driver
     else if(type == "driver")
@@ -537,25 +550,25 @@ void GinManager::LoadFile(const std::string path) throw()
     else if(type == "event")
     {
         m_objects[id] = event;
-        m_events[id] = new Event(lines);
+        m_events[id] = new Event(line_args);
     }
     // Location
     else if(type == "location")
     {
         m_objects[id] = location;
-        m_locations[id] = new Location(lines);
+        m_locations[id] = new Location(line_args);
     }
     // Menu
     else if(type == "menu")
     {
         m_objects[id] = menu;
-        m_menus[id] = new Menu(lines);
+        m_menus[id] = new Menu(line_args);
     }
     // Scene
     else if(type == "scene")
     {
         m_objects[id] = scene;
-        m_scenes[id] = new Scene(lines);
+        m_scenes[id] = new Scene(line_args);
     }
     
 }
@@ -662,6 +675,28 @@ bool GinManager::HasArgs(std::string line, int arg_num)
             std::cout << "error_paren" << std::endl;
         throw;
     }
+}
+
+
+/*
+ * Name: GetArgs
+ * Desc: Gets the arguments from a line
+ * Prec: A string
+ * Post: Returns a vector of the arguments
+ */
+std::vector<std::string> GinManager::GetArgs(std::string line)
+{
+    std::string arg_bit = "([^\"\\s]+|\"[^\"]+\"|\\([^\\(\\)]+\\))";
+    std::regex rgx(arg_bit);
+    std::smatch match;
+    std::vector<std::string> output;
+    
+    while (std::regex_search(line, match, rgx))
+    {
+        output.push_back(match[0]);
+        line = match.suffix().str();
+    }
+    return output;
 }
 
 

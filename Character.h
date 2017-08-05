@@ -20,12 +20,15 @@
 
 class Character {
 public:
-    Character(std::vector<std::string> lines);
+    Character(std::vector<std::vector<std::string>> line_args);
     Character(const Character& orig);
     virtual ~Character();
     std::string Say(const std::string style, const std::string input);
 private:
+    std::string m_name;
+    std::string m_prefer;
     std::string m_short;
+    std::string m_color;
     std::map<std::string,std::string> m_say_styles;
 };
 

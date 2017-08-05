@@ -14,7 +14,7 @@
 #include "Menu.h"
 
 
-Menu::Menu(std::vector<std::string> lines) {
+Menu::Menu(std::vector<std::vector<std::string>> line_args) {
 }
 
 Menu::Menu(const Menu& orig) {
