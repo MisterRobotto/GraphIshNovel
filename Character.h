@@ -17,6 +17,9 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <regex>
+
+#include "Exceptions.cpp"
 
 class Character {
 public:
@@ -29,7 +32,10 @@ private:
     std::string m_prefer;
     std::string m_short;
     std::string m_color;
+    std::map<std::string,std::string> m_images;
     std::map<std::string,std::string> m_say_styles;
+    
+    bool IsHex(std::string input);
 };
 
 #endif /* CHARACTER_H */

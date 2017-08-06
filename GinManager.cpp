@@ -128,7 +128,7 @@ void GinManager::LoadSettings()
     m_arg_count["color"] = 2;
     
     m_char_prefixes.push_back("image");
-    m_arg_count["image"] = 2;
+    m_arg_count["image"] = 3;
     
     m_char_prefixes.push_back("say");
     m_arg_count["say"] = 3;
@@ -530,47 +530,53 @@ void GinManager::LoadFile(const std::string path) throw()
     if(type == "NULL")
     {
         throw NoType_Error(path);
-    }    
-    /*
-     * Create associated object, add it to m_objects and the relevant
-     *      type vector
-     */
-    // Character
-    else if(type == "char")
-    {
-        m_objects[id] = character;
-        m_characters[id] = new Character(line_args);
     }
-    //Driver
-    else if(type == "driver")
+    try
     {
-        // [TODO]
+        /*
+         * Create associated object, add it to m_objects and the relevant
+         *      type vector
+         */
+        // Character
+        if(type == "char")
+        {
+            m_objects[id] = character;
+            m_characters[id] = new Character(line_args);
+        }
+        //Driver
+        else if(type == "driver")
+        {
+            // [TODO]
+        }
+        // Event
+        else if(type == "event")
+        {
+            m_objects[id] = event;
+            m_events[id] = new Event(line_args);
+        }
+        // Location
+        else if(type == "location")
+        {
+            m_objects[id] = location;
+            m_locations[id] = new Location(line_args);
+        }
+        // Menu
+        else if(type == "menu")
+        {
+            m_objects[id] = menu;
+            m_menus[id] = new Menu(line_args);
+        }
+        // Scene
+        else if(type == "scene")
+        {
+            m_objects[id] = scene;
+            m_scenes[id] = new Scene(line_args);
+        }
     }
-    // Event
-    else if(type == "event")
+    catch(std::pair<std::string, int> e)
     {
-        m_objects[id] = event;
-        m_events[id] = new Event(line_args);
+        throw DoubleDef_Error(e.first, path, e.second);
     }
-    // Location
-    else if(type == "location")
-    {
-        m_objects[id] = location;
-        m_locations[id] = new Location(line_args);
-    }
-    // Menu
-    else if(type == "menu")
-    {
-        m_objects[id] = menu;
-        m_menus[id] = new Menu(line_args);
-    }
-    // Scene
-    else if(type == "scene")
-    {
-        m_objects[id] = scene;
-        m_scenes[id] = new Scene(line_args);
-    }
-    
 }
 
 /* 
