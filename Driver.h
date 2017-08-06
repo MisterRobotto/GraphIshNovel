@@ -14,7 +14,11 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-// [TODO]: Most of this ish
+#include <string>
+#include <vector>
+#include <map>
+
+#include "TypeEnums.cpp"
 
 class Driver {
 public:
@@ -22,10 +26,14 @@ public:
     Driver(const Driver& orig);
     virtual ~Driver();
     
-    bool IsMainDriver();
+    void AddDriver(std::vector<std::vector<std::string>> line_args);
 private:
     bool m_main_driver;
-
+    std::vector<std::string> m_include;
+    // [TODO] second value in map should be variable type, once that's made
+    std::map<std::string,std::string> m_vars;
+    int m_driver_count;
+    std::string m_start;
 };
 
 #endif /* DRIVER_H */

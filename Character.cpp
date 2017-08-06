@@ -29,7 +29,6 @@ Character::Character(std::vector<std::vector<std::string>> line_args)
     m_color = "";
     
     int c = 0;
-    std::string prefix;
     // Go through all the lines
     for(std::vector<std::vector<std::string>>::iterator it = line_args.begin();
             it != line_args.end(); ++it)
@@ -38,7 +37,7 @@ Character::Character(std::vector<std::vector<std::string>> line_args)
         c++;
         
         std::vector<std::string> line = *it;
-        prefix = line.at(0);
+        std::string prefix = line.at(0);
         
         // If prefix is "name"
         if(prefix == "name")

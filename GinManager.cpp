@@ -94,6 +94,8 @@ GinManager::~GinManager()
  */
 void GinManager::LoadSettings()
 {    
+    m_driver;
+    
     std::vector<std::string> all_prefixes;
     
     /*
