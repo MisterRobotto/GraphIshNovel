@@ -1,14 +1,14 @@
-# Player Character test
+# Player Character test;
 
-char CHAR_MAIN
-name "Protagonist Jones"
-prefer Protagonist-kun
-short me
-color 3c11d8
+char CHAR_MAIN;
+name "Protagonist Jones";
+prefer Protagonist-kun;
+short me;
+color 3c11d8;
 
 
-# Say Styles
+# Say Styles;
 
-say default "{...}"
+say default "{...}";
 
-say think "[i]{...}[\i]"
+say think "[i]{...}[\i]";

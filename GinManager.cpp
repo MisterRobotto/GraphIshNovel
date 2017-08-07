@@ -329,10 +329,38 @@ void GinManager::LoadFile(const std::string path) throw()
     char chr_input[1024];
     while(file.peek() != EOF)
     {
-        file.getline(chr_input,80);
+        file.getline(chr_input,1024,';');
         lines.push_back(chr_input);
     }
     
+    // Clean whitespace
+    for(std::vector<std::string>::iterator line = lines.begin();
+            line != lines.end(); ++line)
+    {
+        // Replace newlines with spaces, delete tabs
+        for(std::string::iterator it = line->begin(); it != line->end(); ++it)
+        {
+            if(*it == '\n')
+            {
+                (*it) = ' ';
+            }
+            else if(*it == '\t')
+            {
+                it = line->erase(it);
+                --it;
+            }
+        }
+        
+        // Remove leading + trailing spaces
+        while(line->front() == ' ')
+        {
+            line->erase(line->begin());
+        }
+        while(line->back() == ' ')
+        {
+            line->erase(line->end());
+        }
+    }
     
     bool in_collection;
     int coll_indent;
@@ -348,6 +376,8 @@ void GinManager::LoadFile(const std::string path) throw()
         std::string line = *it;
         i++;
         
+        std::cout << "\"" << line << "\"" << std::endl;
+        
         int curr_indent = 0;
         /*
          * Indentation does not matter now, so get rid of it before problems
@@ -360,11 +390,13 @@ void GinManager::LoadFile(const std::string path) throw()
         }
         std::string prefix = line.substr(0,line.find_first_of(" "));
         
+        /*
         // If prefix ends with a colon, drop it
         if(prefix.back() == ':')
         {
             prefix.pop_back();
         }
+        */
         
         /*
          * If curr_indent is not greater than coll_indent and isn't a comment
@@ -434,8 +466,8 @@ void GinManager::LoadFile(const std::string path) throw()
                     id = line.substr(prefix.size() + 1);
                     
                     // Remove the type definition; it's not needed anymore
-                    lines.erase(lines.cbegin()+i);
-                    i--;
+                    it = lines.erase(it);
+                    --it;
                 }
                 // If it is, throw TwoType_Error
                 else
@@ -658,10 +690,11 @@ void GinManager::LoadDirectory(const std::string path)
  */
 bool GinManager::HasArgs(std::string line, int arg_num)
 {
+    // Set the single-argument test
+    std::string arg_bit = "(<[^<>]+>|\\([^\\(\\)]+\\)|[^\"\\s]+|\"[^\"]+\")";
+    
     // Try-Catch just in case a change to the Regex makes it flip out
     try{
-        // Set the single-argument test
-        std::string arg_bit = "([^\"\\s]+|\"[^\"]+\"|\\([^\\(\\)]+\\))";
         // Start with start-of-line flag, open-paren, and a single-argument test
         std::string regex_test_str = "^(" + arg_bit;
         // From 1 to arg_num (ie. arg_num - 1 times)
@@ -694,7 +727,7 @@ bool GinManager::HasArgs(std::string line, int arg_num)
  */
 std::vector<std::string> GinManager::GetArgs(std::string line)
 {
-    std::string arg_bit = "([^\"\\s]+|\"[^\"]+\"|\\([^\\(\\)]+\\))";
+    std::string arg_bit = "(<[^<>]+>|\\([^\\(\\)]+\\)|[^\"\\s]+|\"[^\"]+\")";
     std::regex rgx(arg_bit);
     std::smatch match;
     std::vector<std::string> output;

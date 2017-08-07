@@ -1,8 +1,10 @@
-# Test Event
+# Test Event;
 
-event EVNT_TEST_0001
-start_flow test_flow
+event EVNT_TEST_0001;
+start_flow test_flow;
 
-flow test_flow:
+flow test_flow
+{
     say |me|.think "I wonder if this is working..."
     say |me| "Hey, is this working?"
+}

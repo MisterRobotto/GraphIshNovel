@@ -127,4 +127,16 @@ class TwoMainDriver_Error : public Gin_Error
                         "Second MAIN_DRIVER declared"){}
 };
 
+
+class Collection_Error : public Gin_Error
+{
+    public:
+        explicit Collection_Error (const std::string& file,
+                const int& line) : Gin_Error(file, line,
+                        "Improperly constructed collection"){}
+        explicit Collection_Error (const std::string& file,
+                const std::string& line) : Gin_Error(file, line,
+                        "Improperly constructed collection"){}
+}; 
+
 #endif /* GIN_EXCEPTIONS */

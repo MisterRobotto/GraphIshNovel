@@ -1,12 +1,13 @@
-# Test Driver
+# Test Driver;
 
-driver DRVR_TEST
+driver DRVR_TEST;
 
-MAIN_DRIVER
+MAIN_DRIVER;
 
-start EVNT_TEST_0001
+start EVNT_TEST_0001;
 
-vars:
-    int test_integer
-    bool test_boolean
+vars <
+    int test_integer,
+    bool test_boolean,
     string test_string
+     >;
